@@ -4,3 +4,7 @@
 *:before {
   box-sizing: border-box;
 }
+
+img {
+  height: 10px;
+}
