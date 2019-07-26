@@ -26,7 +26,7 @@ Practiced an agile workflow by...
 
 
 ## Link to GitPages
-https://allisonjw.github.io/Idea-Box/
+https://qfarenwald.github.io/check_yo_self/
 
 ## Contributions
 
