@@ -9,13 +9,47 @@ var taskItem = document.querySelector('.aside__input--item');
 getLists();
 reDisplayLists();
 
-aside.addEventListener('click', makeNewList);
+aside.addEventListener('click', asideHandler);
+main.addEventListener('click', mainHandler);
+
+function asideHandler(e) {
+  if (e.target.closest('#MakeTaskListBtn')) {
+    makeNewList(e);
+  }
+}
+
+function mainHandler(e) {
+  getId(e);
+  if (e.target.closest('.article__section--img3')) {
+    deleteList(e);
+  }
+}
+
+function getId(e) {
+  var findId = e.target.closest('article').getAttribute('data-id');
+  console.log(findId)
+  // var index = listsArray.findIndex(function(list) {
+  //   return list.id == findId;
+// })
+// if (e.target.classList[0] === "article__section--img3") {
+//   deleteList(e, index);
+//  }
+//     return index;
+}
+
+function deleteList(e, index) {
+  e.target.closest('article').remove();
+  console.log('fire')
+  listsArray[index].deleteFromStorage(index);
+  listMessage();
+}
+// will not work till index is found
 
 function getLists() {
   if (JSON.parse(localStorage.getItem('theLists')) === null) {
   } else {
-  listsArray = JSON.parse(localStorage.getItem('theLists')).map(function({title}) {
-    return new ToDoList(title);
+  listsArray = JSON.parse(localStorage.getItem('theLists')).map(function({id, title}) {
+    return new ToDoList(id, title);
     });
   }
 }
@@ -28,7 +62,7 @@ function reDisplayLists() {
 
 function makeNewList(e) {
   e.preventDefault();
-  var list = new ToDoList(taskTitle.value);
+  var list = new ToDoList(Date.now(), taskTitle.value);
   listsArray.push(list);
   list.saveToStorage(listsArray);
   generateTaskList(list);
@@ -40,10 +74,10 @@ function clearFormInputs() {
   taskItem.value = "";
 }
 
-function generateTaskList() {
+function generateTaskList({id, title}) {
   main.insertAdjacentHTML ('afterbegin',
- `<article class="main__article data-id=id">
-   <h2 class="article__h2">Task Title</h2>
+ `<article class="main__article data-id=${id}">
+   <h2 class="article__h2">${title}</h2>
    <hr>
    <section class="article__section1">
      <img class="article__section--img1" src="images/checkbox.svg" alt="unclicked checkbox image">
@@ -71,4 +105,3 @@ function listMessage() {
     paragraph.classList.add('hidden');
   }
 }
-// will not work yet b/c nothing is going into listsArray
