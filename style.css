@@ -181,5 +181,19 @@ main {
 
 .article__section--img2,
 .article__section--img3 {
-  margin: 15px 15px 15px 15px;
+  margin: 5px 0px 5px 0px;
+}
+
+.article__section2--container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+}
+
+h4 {
+  color: #587A8A;
+  font-size: 0.75em;
+  font-weight: 400;
+  margin: 0px 5px 0px 5px;
 }
