@@ -1,5 +1,6 @@
 class ToDoList {
-  constructor(title) {
+  constructor(id, title) {
+    this.id = Date.now();
     this.title = title;
     this.tasks = [
       // {this.check = false;
@@ -7,7 +8,6 @@ class ToDoList {
       // {this.check = false;
       //   this.item = 'string'}
     ];
-    this.id = Date.now();
     this.urgent = false;
   }
 
@@ -16,9 +16,10 @@ class ToDoList {
   }
 
   deleteFromStorage(index) {
-    // globalArray.splice(index, 1);
-    // saveToStorage(globalArray);
+    listsArray.splice(index, 1);
+    saveToStorage(listsArray);
   }
+  // will get error till index is found
 
   updateToDo() {
 
