@@ -199,6 +199,11 @@ h4 {
   margin: 0px 5px 0px 5px;
 }
 
+.main__paragraph {
+  position: absolute;
+  z-index: 1;
+}
+
 @media screen and (max-width: 850px) {
   body {
     grid-template-columns: 50% 50%;

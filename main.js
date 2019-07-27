@@ -2,12 +2,47 @@ var listsArray = [];
 var aside = document.querySelector('.aside');
 var main = document.querySelector('.main');
 var makeTaskListBtn = document.querySelector('.aside__btn');
+var paragraph = document.querySelector('.main__paragraph');
+var taskTitle = document.querySelector('.aside__input--title');
+var taskItem = document.querySelector('.aside__input--item');
 
-aside.addEventListener('click', makeTaskList);
+getLists();
+reDisplayLists();
 
-function makeTaskList() {
+aside.addEventListener('click', makeNewList);
+
+function getLists() {
+  if (JSON.parse(localStorage.getItem('theLists')) === null) {
+  } else {
+  listsArray = JSON.parse(localStorage.getItem('theLists')).map(function({title}) {
+    return new ToDoList(title);
+    });
+  }
+}
+
+function reDisplayLists() {
+  for (var i = 0; i < listsArray.length; i++) {
+    generateTaskList(listsArray[i]);
+  }
+}
+
+function makeNewList(e) {
+  e.preventDefault();
+  var list = new ToDoList(taskTitle.value);
+  listsArray.push(list);
+  list.saveToStorage(listsArray);
+  generateTaskList(list);
+  clearFormInputs();
+}
+
+function clearFormInputs() {
+  taskTitle.value = "";
+  taskItem.value = "";
+}
+
+function generateTaskList() {
   main.insertAdjacentHTML ('afterbegin',
- `<article class="main__article">
+ `<article class="main__article data-id=id">
    <h2 class="article__h2">Task Title</h2>
    <hr>
    <section class="article__section1">
@@ -26,4 +61,14 @@ function makeTaskList() {
      </div>
    </section>
  </article>`)
+ listMessage();
 };
+
+function listMessage() {
+  if (listsArray.length === 0) {
+    paragraph.classList.remove('hidden');
+  } else if (listsArray.length !== 0) {
+    paragraph.classList.add('hidden');
+  }
+}
+// will not work yet b/c nothing is going into listsArray

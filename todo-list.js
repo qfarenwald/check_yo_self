@@ -7,13 +7,12 @@ class ToDoList {
       // {this.check = false;
       //   this.item = 'string'}
     ];
-    this.id = dateTime();
-    // how write above?
+    this.id = Date.now();
     this.urgent = false;
   }
 
-  saveToStorage(globalArray) {
-    // localStorage.setItem('theIdeas', JSON.stringify(globalArray));
+  saveToStorage(listsArray) {
+    localStorage.setItem('theLists', JSON.stringify(listsArray));
   }
 
   deleteFromStorage(index) {
