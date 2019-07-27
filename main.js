@@ -113,11 +113,11 @@ function generateTaskList({id, title}) {
  listMessage();
 };
 
-function generateTaskItems({check, text}) {
+function generateTaskItems({text}) {
   taskTitle.insertAdjacentHTML ('afterend',
  `<section class="article__section1">
    <img class="article__section--img1" src="images/checkbox.svg" alt="unclicked checkbox image">
-   <p class="article__section--p">String of idea text. String of idea text. String of idea text. String of idea text.</p>
+   <p class="article__section--p">${taskItem.value}</p>
  </section>`)
 };
 
