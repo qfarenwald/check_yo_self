@@ -11,15 +11,14 @@ reDisplayLists();
 
 aside.addEventListener('click', asideHandler);
 aside.addEventListener('keyup', enableMakeTaskListBtn);
-aside.addEventListener('click', enableMakeTaskListBtn);
 main.addEventListener('click', mainHandler);
 
 function asideHandler(e) {
   e.preventDefault();
   if (e.target.closest('#MakeTaskListBtn')) {
     makeNewList(e);
+    enableMakeTaskListBtn(e);
   }
-
   if (e.target.closest('.aside__img')) {
     generateTaskItems(e);
   }
@@ -114,8 +113,8 @@ function generateTaskList({id, title}) {
  listMessage();
 };
 
-function generateTaskItems({id, title}) {
-  taskTitle.insertAdjacentHTML ('afterbegin',
+function generateTaskItems({check, text}) {
+  taskTitle.insertAdjacentHTML ('afterend',
  `<section class="article__section1">
    <img class="article__section--img1" src="images/checkbox.svg" alt="unclicked checkbox image">
    <p class="article__section--p">String of idea text. String of idea text. String of idea text. String of idea text.</p>
