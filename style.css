@@ -8,7 +8,7 @@
 body {
   display: grid;
   font-family: 'Open Sans', sans-serif;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 30% 35% 35%;
   grid-template-rows: 70px 100vh;
   grid-template-areas:
     "header header header"
@@ -41,6 +41,7 @@ header {
 
 .header__h1 {
   color: #FFFFFF;
+  font-size: 2.25em;
   justify-content: flex-start;
   margin: 0;
 }
@@ -56,10 +57,12 @@ header {
 .header__form--img {
   background-color: #d7e0e2;
   border: none;
+  border-radius: 2px 0px 0px 2px;
   width: 52px;
 }
 
 .header__form--input {
+  border-radius: 0px 2px 2px 0px;
   display: inline;
   border: none;
   width: 250px;
@@ -71,38 +74,47 @@ aside {
   background-color: #587A8A;
   border: 1px solid #1F1F3D;
   grid-area: aside;
-  padding: 15px;
+  /* padding: 15px; */
 }
 
 .aside__h3 {
   color: #F3F6F7;
-  margin: 10px 0px 5px 0px;
-  font-size: 1rem;
+  font-size: 1em;
+  font-weight: 400;
+  margin: 30px 0px 5px 20px;
 }
 
 .aside__form {
   border-bottom: 1px solid #1F1F3D;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
 }
 
 .aside__input--title {
-  margin-bottom: 20px;
-  width: 100%;
+  margin: auto;
+  width: 90%;
 }
 
 .aside__input--containter {
   display: flex;
-  width: 100%;
+  margin: auto;
+  width: 90%;
 }
 
 .aside__img {
   background-color: #1F1F3D;
+  border-radius: 0px 2px 2px 0px;
   width: 50px;
 }
 
 .aside__input--item {
+  border-radius: 2px 0px 0px 2px;
   display: inline;
   margin-bottom: 20px;
-  width: 83%;
+  width: 90%;
 }
 
 .aside__btn {
@@ -111,13 +123,13 @@ aside {
   background-color: #1F1F3D;
   color: #FFFFFF;
   display: block;
-  font-size: 1em;
+  font-size: 1.25em;
   font-weight: 800;
-  height: 40px;
-  margin: 20px 0px 20px 0px;
+  height: 50px;
+  margin: 10px auto 10px auto;
   outline: none;
   padding: 10px;
-  width: 100%;
+  width: 90%;
 }
 
 /* MAIN */
