@@ -3,8 +3,8 @@ class ToDoList {
     this.id = Date.now();
     this.title = title;
     this.tasks = [
-      // {this.check = false;
-      //   this.item = 'string'},
+      // {this.tasks.check = false;
+      //   this.tasks.item = 'string'},
       // {this.check = false;
       //   this.item = 'string'}
     ];
