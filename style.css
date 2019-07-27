@@ -76,6 +76,11 @@ aside {
   /* padding: 15px; */
 }
 
+button:hover {
+    cursor: pointer;
+    cursor: hand;
+}
+
 .aside__h3 {
   color: #F3F6F7;
   font-size: 1em;
