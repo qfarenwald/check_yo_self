@@ -7,42 +7,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
   <body>
-    <header>
-      <h1>CHECK YO' SELF</h1>
-      <form>
-        <div>
-          <img src="images/search.svg" alt="search magnifying glass button">
-        </div>
-        <input type="text" placeholder="Search">
+    <header class="header">
+      <h1 class="header__h1">CHECK <span class="header__span">YO'</span> SELF</h1>
+      <form class="header__form">
+        <input class="header__form--img" type="image" src="images/search.svg" alt="search magnifying glass button">
+        <input class="header__form--input" type="text" placeholder="Search">
       </form>
     </header>
-    <aside>
-      <form>
-        <h3>Task Title</h3>
-        <input type="text">
-        <h3>Task Item</h3>
-        <div>
-          <input type="text">
-          <div>
-            <img src="images/plus.svg" alt="plus sign button">
-          </div>
+    <aside class="aside">
+      <form class="aside__form">
+        <h3 class="aside__h3">Task Title</h3>
+        <input class="aside__input--title" type="text">
+        <h3 class="aside__h3">Task Item</h3>
+        <div class="aside__input--containter">
+          <input class="aside__input--item" type="text">
+          <input class="aside__img" type="image" src="images/plus.svg" alt="plus sign button">
         </div>
-        <button type="submit">Make Task List</button>
-        <button type="submit">Clear All</button>
+        <button class="aside__btn" type="submit">Make Task List</button>
+        <button class="aside__btn" type="submit">Clear All</button>
       </form>
-      <button type="submit">Filter By Urgency</button>
+      <button class="aside__btn" type="submit">Filter By Urgency</button>
     </aside>
-    <main>
+    <main class="main">
 <!-- place this in js -->
-      <article>
-        <h2>Task Title</h2>
-        <section>
-          <img src="images/checkbox.svg" alt="unclicked checkbox image">
-          <p>String of idea text.</p>
-        <section>
-        <section>
-          <img src="images/urgent.svg" alt="white colored unactivated lightning bolt image">
-          <img src="images/delete.svg" alt="white colored unactivated x image">
+      <article class="main__article">
+        <h2 class="article__h2">Task Title</h2>
+        <hr>
+        <section class="article__section1">
+          <img class="article__section--img1" src="images/checkbox.svg" alt="unclicked checkbox image">
+          <p class="article__section--p">String of idea text. String of idea text. String of idea text. String of idea text.</p>
+        </section>
+        <hr>
+        <section class="article__section2">
+          <div class="article__section2--container">
+            <img class="article__section--img2" src="images/urgent.svg" alt="white colored unactivated lightning bolt image">
+            <h4 class="article__section--h4">URGENT</h4>
+          </div>
+          <div class="article__section2--container">
+            <img class="article__section--img3" src="images/delete.svg" alt="white colored unactivated x image">
+            <h4 class="article__section--h4">DELETE</h4>
+          </div>
         </section>
       </article>
 <!-- place this in js -->
