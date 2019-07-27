@@ -69,11 +69,9 @@ header {
   width: 250px;
 }
 
-
 /* ASIDE */
 aside {
   background-color: #587A8A;
-  border: 1px solid #1F1F3D;
   grid-area: aside;
   /* padding: 15px; */
 }
@@ -136,7 +134,6 @@ aside {
 /* MAIN */
 main {
   background-color: #F3F6F7;
-  border: 1px solid #1F1F3D;
   grid-area: main;
   padding: 25px;
   column-width: 16em;
@@ -202,6 +199,45 @@ h4 {
   margin: 0px 5px 0px 5px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 850px) {
+  body {
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 70px auto;
+    grid-template-areas:
+      "header header"
+      "aside aside"
+      "main main";
+  }
 
+  .aside__input--item {
+    width: 100%;
+  }
+
+  .aside__h3 {
+    margin: 30px 0px 5px 40px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  body {
+    grid-template-rows: 150px auto;
+  }
+
+  header {
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .header__form {
+    width: 95%;
+  }
+
+  .header__form--input {
+    width: 100%;
+  }
+
+@media screen and (max-width: 650px) {
+  .aside__h3 {
+    margin: 30px 0px 5px 20px;
+  }
 }
