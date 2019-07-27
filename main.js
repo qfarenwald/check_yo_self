@@ -3,6 +3,7 @@ var tasksArray = [];
 var aside = document.querySelector('.aside');
 var main = document.querySelector('.main');
 var makeTaskListBtn = document.querySelector('.aside__btn');
+var addTaskBtn = document.querySelector('.aside__img')
 var paragraph = document.querySelector('.main__paragraph');
 var taskTitle = document.querySelector('.aside__input--title');
 var taskItem = document.querySelector('.aside__input--item');
@@ -10,11 +11,13 @@ var taskItem = document.querySelector('.aside__input--item');
 getLists();
 reDisplayLists();
 
-aside.addEventListener('click', asideHandler);
+aside.addEventListener('click', asideHandlerClick);
+// aside.addEventListener('keyup', asideHandlerKeyup);
 aside.addEventListener('keyup', enableMakeTaskListBtn);
+aside.addEventListener('keyup', enableAddItemBtn);
 main.addEventListener('click', mainHandler);
 
-function asideHandler(e) {
+function asideHandlerClick(e) {
   e.preventDefault();
   if (e.target.closest('#MakeTaskListBtn')) {
     makeNewList(e);
@@ -23,8 +26,13 @@ function asideHandler(e) {
   if (e.target.closest('.aside__img')) {
     generateTaskItems(e);
     taskItem.value = "";
+    enableAddItemBtn(e);
   }
 }
+
+// funtion asideHandlerKeyup(e) {
+//
+// }
 
 function mainHandler(e) {
   getId(e);
@@ -35,10 +43,19 @@ function mainHandler(e) {
 
 function enableMakeTaskListBtn(e) {
   e.preventDefault;
-  if (taskTitle.value !== "") {
+  if (taskTitle.value !== "" && tasksArray.length > 0) {
     makeTaskListBtn.disabled = false;
   } else {
     makeTaskListBtn.disabled = true;
+  }
+}
+
+function enableAddItemBtn(e) {
+  e.preventDefault;
+  if (taskItem.value !== "") {
+    addTaskBtn.disabled = false;
+  } else {
+    addTaskBtn.disabled = true;
   }
 }
 
@@ -89,6 +106,7 @@ function makeNewList(e) {
 function clearFormInputs() {
   taskTitle.value = "";
   taskItem.value = "";
+  // also remove task item list from aside
 }
 
 function generateTaskItems({text}) {
