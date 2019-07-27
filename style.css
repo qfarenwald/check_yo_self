@@ -27,6 +27,11 @@ button:disabled {
   border: 1px solid #8f8f8f;
 }
 
+input:disabled {
+  background-color: #d0d2d3;
+  border: 2px solid #1F1F3D;
+}
+
 img {
   height: 25px;
 }
