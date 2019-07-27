@@ -164,13 +164,14 @@ main {
 .article__section--img1 {
   display: inline;
   height: 25px;
-  margin: 30px 20px 30px 15px;
+  margin: 0px 20px 50px 15px;
 }
 
 .article__section--p {
   display: inline;
   font-size: 1.25em;
   margin:  1rem 0;
+  padding-right: 20px;
 }
 
 .article__section2 {
