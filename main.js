@@ -7,6 +7,7 @@ var addTaskBtn = document.querySelector('.aside__img')
 var paragraph = document.querySelector('.main__paragraph');
 var taskTitle = document.querySelector('.aside__input--title');
 var taskItem = document.querySelector('.aside__input--item');
+var articleSection1 = document.querySelector('.article__section1');
 
 getLists();
 reDisplayLists();
@@ -22,6 +23,7 @@ function asideHandlerClick(e) {
   if (e.target.closest('#MakeTaskListBtn')) {
     makeNewList(e);
     enableMakeTaskListBtn(e);
+    putArrayOfItemsInCard(tasksArray);
   }
   if (e.target.closest('.aside__img')) {
     generateTaskItems(e);
@@ -90,7 +92,7 @@ function getLists() {
 
 function reDisplayLists() {
   for (var i = 0; i < listsArray.length; i++) {
-    generateTaskList(listsArray[i]);
+    generateTaskCard(listsArray[i]);
   }
 }
 
@@ -99,7 +101,7 @@ function makeNewList(e) {
   var list = new ToDoList(Date.now(), taskTitle.value);
   listsArray.push(list);
   list.saveToStorage(listsArray);
-  generateTaskList(list);
+  generateTaskCard(list);
   clearFormInputs();
 }
 
@@ -107,6 +109,22 @@ function clearFormInputs() {
   taskTitle.value = "";
   taskItem.value = "";
   // also remove task item list from aside
+}
+
+function putArrayOfItemsInCard(tasksArray) {
+  var newTasksArray = [];
+  console.log('one', tasksArray)
+  for(var i = 0; i < tasksArray.length; i++){
+   var codeBlock = `<section class="article__section1">
+   <img class="article__section--img1" src="images/checkbox.svg" alt="circle checkbox button">
+     <p class="article__section--p">${tasksArray[i]}</p>
+     </section>`;
+   newTasksArray.push(codeBlock);
+   console.log('two', newTasksArray);
+  }
+  newTasksArray.join(" ");
+  console.log('three', newTasksArray);
+  return newTasksArray;
 }
 
 function generateTaskItems({text}) {
@@ -118,15 +136,13 @@ function generateTaskItems({text}) {
   tasksArray.push(taskItem.value)
 };
 
-function generateTaskList({id, title, tasksArray}) {
+function generateTaskCard(list) {
+  var joinTaskArray = putArrayOfItemsInCard(tasksArray)
   main.insertAdjacentHTML ('afterbegin',
- `<article class="main__article data-id=${id}">
-   <h2 class="article__h2">${title}</h2>
+ `<article class="main__article data-id=${list.id}">
+   <h2 class="article__h2">${list.title}</h2>
    <hr>
-   <section class="article__section1">
-     <img class="article__section--img1" src="images/checkbox.svg" alt="unclicked checkbox image">
-     <p class=${tasksArray}</p>
-   </section>
+   ${joinTaskArray}
    <hr>
    <section class="article__section2">
      <div class="article__section2--container">
@@ -149,3 +165,31 @@ function listMessage() {
     paragraph.classList.add('hidden');
   }
 }
+
+
+// STORAGE
+// function generateTaskCard({id, title, tasksArray}) {
+//   main.insertAdjacentHTML ('afterbegin',
+//  `<article class="main__article data-id=${id}">
+//    <h2 class="article__h2">${title}</h2>
+//    <hr>
+//    <section class="article__section1">
+//
+//      <img class="article__section--img1" src="images/checkbox.svg" alt="unclicked checkbox image">
+//      <p class="article__section--p">Demo text</p>
+//
+//    </section>
+//    <hr>
+//    <section class="article__section2">
+//      <div class="article__section2--container">
+//        <img class="article__section--img2" src="images/urgent.svg" alt="white colored unactivated lightning bolt image">
+//        <h4 class="article__section--h4">URGENT</h4>
+//      </div>
+//      <div class="article__section2--container">
+//        <img class="article__section--img3" src="images/delete.svg" alt="white colored unactivated x image">
+//        <h4 class="article__section--h4">DELETE</h4>
+//      </div>
+//    </section>
+//  </article>`)
+//  listMessage();
+// };
