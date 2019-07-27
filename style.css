@@ -9,11 +9,12 @@ body {
   display: grid;
   font-family: 'Open Sans', sans-serif;
   grid-template-columns: 30% 35% 35%;
-  grid-template-rows: 70px 100vh;
+  grid-template-rows: 70px auto;
   grid-template-areas:
     "header header header"
     "aside main main";
   margin: 0;
+  height: 100vh;
 }
 
 img {
@@ -164,9 +165,10 @@ hr {
 }
 
 .article__section--img1 {
+  align-self: flex-start;
   display: inline;
   height: 25px;
-  margin: 0px 20px 50px 15px;
+  margin: 18px 20px 0px 15px;
 }
 
 .article__section--p {
@@ -198,4 +200,8 @@ h4 {
   font-size: 0.75em;
   font-weight: 400;
   margin: 0px 5px 0px 5px;
+}
+
+@media screen and (max-width: 500px) {
+
 }
