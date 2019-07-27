@@ -17,8 +17,23 @@ body {
   height: 100vh;
 }
 
+button:hover {
+    cursor: pointer;
+    cursor: hand;
+}
+
+button:disabled {
+  background-color: #d0d2d3;
+  border: 1px solid #8f8f8f;
+}
+
 img {
   height: 25px;
+}
+
+img:hover {
+    cursor: pointer;
+    cursor: hand;
 }
 
 input {
@@ -74,11 +89,6 @@ aside {
   background-color: #587A8A;
   grid-area: aside;
   /* padding: 15px; */
-}
-
-button:hover {
-    cursor: pointer;
-    cursor: hand;
 }
 
 .aside__h3 {
