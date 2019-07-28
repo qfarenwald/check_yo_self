@@ -29,7 +29,9 @@ button:disabled {
 
 input:disabled {
   background-color: #d0d2d3;
-  border: 2px solid #d0d2d3;
+  border-top: 2px solid #1F1F3D;
+  border-right: 2px solid #1F1F3D;
+  border-bottom: 2px solid #1F1F3D;
 }
 
 img {
@@ -43,7 +45,6 @@ img:hover {
 
 input {
   border-radius: 2px;
-  border: 2px solid #1F1F3D;
   font-size: 1em;
   height: 50px;
   outline: none;
@@ -113,6 +114,7 @@ aside {
 }
 
 .aside__input--title {
+  border: 2px solid #1F1F3D;
   margin: auto;
   width: 90%;
 }
@@ -125,11 +127,17 @@ aside {
 
 .aside__img {
   background-color: #1F1F3D;
+  border-top: 2px solid #1F1F3D;
+  border-right: 2px solid #1F1F3D;
+  border-bottom: 2px solid #1F1F3D;
   border-radius: 0px 2px 2px 0px;
   width: 50px;
 }
 
 .aside__input--item {
+  border-top: 2px solid #1F1F3D;
+  border-left: 2px solid #1F1F3D;
+  border-bottom: 2px solid #1F1F3D;
   border-radius: 2px 0px 0px 2px;
   display: inline;
   margin-bottom: 20px;
@@ -164,7 +172,7 @@ main {
   border: 2px solid #d7e0e2;
   display: inline-block;
   margin:  0.75rem;
-  /* width:  100%; */
+  width: 90%;
 }
 
 .article__h2 {
