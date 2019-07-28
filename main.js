@@ -134,14 +134,15 @@ function reDisplayCards() {
 function makeNewList(e) {
   e.preventDefault();
   var list = new ToDoList(Date.now(), taskTitle.value);
+  createObjectOfItems(list);
   listsArray.push(list);
   list.saveToStorage(listsArray);
   generateTaskCard(list);
   clearFormInputs();
-  console.log('fire', list.id)
-  var id = list.id;
-  console.log('duck', id)
-  return id;
+  // should i return id here?
+  // var id = list.id;
+  // return id;
+  // console.log('fire', id)
 }
 
 function clearFormInputs() {
@@ -162,6 +163,16 @@ function putArrayOfItemsInCard(tasksArray) {
   }
   newTasksArray.join(" ");
   return newTasksArray;
+}
+
+// create function that turns tasksArray into objects
+// in this function, loop through tasksArray, for each pass, create object and fill in index item: with the array string at that index
+// check: false
+// when done, envoke in makeNewList(e) function where larger new instance is being created
+function createObjectOfItems(list){
+  for(var i = 0; i < tasksArray.length; i++){
+    list.tasks.push({check: false, item: tasksArray[i]});
+  }
 }
 
 function generateTaskItems({list}) {

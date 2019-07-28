@@ -1,13 +1,8 @@
 class ToDoList {
   constructor(id, title) {
-    this.id = Date.now();
+    this.id = id || Date.now();
     this.title = title;
-    this.tasks = [
-      // {this.tasks.check = false;
-      //   this.tasks.item = 'string'},
-      // {this.check = false;
-      //   this.item = 'string'}
-    ];
+    this.tasks = [];
     this.urgent = false;
   }
 
