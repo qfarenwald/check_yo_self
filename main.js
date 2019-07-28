@@ -8,11 +8,12 @@ var paragraph = document.querySelector('.main__paragraph');
 var taskTitle = document.querySelector('.aside__input--title');
 var taskItem = document.querySelector('.aside__input--item');
 var taskItemHeading = document.querySelector('#TaskItemHeading');
+var taskItemList = document.querySelector('.aside__itemlist--container');
 var articleSection1 = document.querySelector('.article__section1');
 var deleteItemBtn = document.querySelector('.article__section--img1');
 
 getLists();
-reDisplayLists();
+reDisplayCards();
 
 // aside.addEventListener('keyup', asideHandlerKeyup);
 aside.addEventListener('click', asideHandlerClick);
@@ -30,7 +31,6 @@ function asideHandlerClick(e) {
     makeNewList(e);
     enableMakeTaskListBtn(e);
     putArrayOfItemsInCard(tasksArray);
-    getId(e);
   }
 
   if (e.target.closest('.aside__img')) {
@@ -69,8 +69,8 @@ function enableAddItemBtn(e) {
 }
 
 function getId(e) {
-  var findId = e.target.closest('article').getAttribute('data-id');
-  console.log('mamma', findId)
+  var findId = e.target.closest('.article').getAttribute('data-id');
+  console.log('duck', findId)
   // var index = listsArray.findIndex(function(list) {
   //   return list.id == findId;
   //   console.log('whaleshark', findId)
@@ -104,7 +104,7 @@ function getLists() {
   }
 }
 
-function reDisplayLists() {
+function reDisplayCards() {
   for (var i = 0; i < listsArray.length; i++) {
     generateTaskCard(listsArray[i]);
   }
@@ -117,12 +117,18 @@ function makeNewList(e) {
   list.saveToStorage(listsArray);
   generateTaskCard(list);
   clearFormInputs();
+  console.log('fire', list.id)
+  var id = list.id;
+  console.log('duck', id)
+  return id;
 }
 
 function clearFormInputs() {
   taskTitle.value = "";
   taskItem.value = "";
   // also remove task item list from aside
+  tasksArray = [];
+  taskItemList.innerHTML = '';
 }
 
 function putArrayOfItemsInCard(tasksArray) {
@@ -139,7 +145,7 @@ function putArrayOfItemsInCard(tasksArray) {
 }
 
 function generateTaskItems({text}) {
-  taskItemHeading.insertAdjacentHTML ('beforebegin',
+  taskItemList.insertAdjacentHTML ('beforeend',
  `<section class="article__section1">
    <img class="article__section--img1" src="images/delete.svg" alt="circle delete button">
    <p class="article__section--p">${taskItem.value}</p>
@@ -150,7 +156,7 @@ function generateTaskItems({text}) {
 function generateTaskCard(list) {
   var joinTaskArray = putArrayOfItemsInCard(tasksArray)
   main.insertAdjacentHTML ('afterbegin',
- `<article class="main__article data-id=${list.id}">
+ `<article class="main__article" data-id=${list.id}>
    <h2 class="article__h2">${list.title}</h2>
    <hr>
    ${joinTaskArray}
@@ -167,6 +173,7 @@ function generateTaskCard(list) {
    </section>
  </article>`)
  listMessage();
+ console.log('dragon', list.id)
 };
 
 function listMessage() {
