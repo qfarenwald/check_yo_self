@@ -7,6 +7,7 @@ var addTaskBtn = document.querySelector('.aside__img')
 var paragraph = document.querySelector('.main__paragraph');
 var taskTitle = document.querySelector('.aside__input--title');
 var taskItem = document.querySelector('.aside__input--item');
+var taskItemHeading = document.querySelector('#TaskItemHeading');
 var articleSection1 = document.querySelector('.article__section1');
 var deleteItemBtn = document.querySelector('.article__section--img1');
 
@@ -143,7 +144,7 @@ function putArrayOfItemsInCard(tasksArray) {
 }
 
 function generateTaskItems({text}) {
-  taskTitle.insertAdjacentHTML ('afterend',
+  taskItemHeading.insertAdjacentHTML ('beforebegin',
  `<section class="article__section1">
    <img class="article__section--img1" src="images/delete.svg" alt="circle delete button">
    <p class="article__section--p">${taskItem.value}</p>
