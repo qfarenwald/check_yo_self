@@ -11,6 +11,7 @@ var taskItemHeading = document.querySelector('#TaskItemHeading');
 var taskItemList = document.querySelector('.aside__itemlist--container');
 var articleSection1 = document.querySelector('.article__section1');
 var deleteItemBtn = document.querySelector('.article__section--img1');
+// var clearAllBtn = document.querySelector('#ClearAllBtn');
 
 getLists();
 reDisplayCards();
@@ -41,6 +42,10 @@ function asideHandlerClick(e) {
 
   if (e.target.closest('.article__section--img1')) {
     deleteItem(e);
+  }
+
+  if (e.target.closest('#ClearAllBtn')) {
+    clearFormInputs()
   }
 }
 
