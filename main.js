@@ -14,11 +14,15 @@ var deleteItemBtn = document.querySelector('.article__section--img1');
 getLists();
 reDisplayLists();
 
-aside.addEventListener('click', asideHandlerClick);
 // aside.addEventListener('keyup', asideHandlerKeyup);
+aside.addEventListener('click', asideHandlerClick);
 aside.addEventListener('keyup', enableMakeTaskListBtn);
 aside.addEventListener('keyup', enableAddItemBtn);
 main.addEventListener('click', mainHandler);
+
+// funtion asideHandlerKeyup(e) {
+//
+// }
 
 function asideHandlerClick(e) {
   e.preventDefault();
@@ -26,9 +30,7 @@ function asideHandlerClick(e) {
     makeNewList(e);
     enableMakeTaskListBtn(e);
     putArrayOfItemsInCard(tasksArray);
-    // if(tasksArray !== []) {
-    //   tasksArray = [];
-    // }
+    getId(e);
   }
 
   if (e.target.closest('.aside__img')) {
@@ -41,10 +43,6 @@ function asideHandlerClick(e) {
     deleteItem(e);
   }
 }
-
-// funtion asideHandlerKeyup(e) {
-//
-// }
 
 function mainHandler(e) {
   if (e.target.closest('.article__section--img3')) {
@@ -72,9 +70,10 @@ function enableAddItemBtn(e) {
 
 function getId(e) {
   var findId = e.target.closest('article').getAttribute('data-id');
-  console.log(findId)
+  console.log('mamma', findId)
   // var index = listsArray.findIndex(function(list) {
   //   return list.id == findId;
+  //   console.log('whaleshark', findId)
 // })
 // if (e.target.classList[0] === "article__section--img3") {
 //   deleteList(e, index);
@@ -84,7 +83,6 @@ function getId(e) {
 
 function deleteList(e, index) {
   e.target.closest('article').remove();
-  console.log('fire')
   listsArray[index].deleteFromStorage(index);
   listMessage();
 }
@@ -129,17 +127,14 @@ function clearFormInputs() {
 
 function putArrayOfItemsInCard(tasksArray) {
   var newTasksArray = [];
-  console.log('one', tasksArray)
   for(var i = 0; i < tasksArray.length; i++){
    var codeBlock = `<section class="article__section1">
    <img class="article__section--img1" src="images/checkbox.svg" alt="circle checkbox button">
      <p class="article__section--p">${tasksArray[i]}</p>
      </section>`;
    newTasksArray.push(codeBlock);
-   console.log('two', newTasksArray);
   }
   newTasksArray.join(" ");
-  console.log('three', newTasksArray);
   return newTasksArray;
 }
 
