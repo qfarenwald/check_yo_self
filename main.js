@@ -89,10 +89,13 @@ function deleteList(e, index) {
 // will not work till index is found
 
 function deleteItem(e){
-  // getId?
+  var target = e.target.parentNode.childNodes[3].innerText;
+  console.log('nice', target)
+  var filter = tasksArray.filter(function(string) {
+    return string !== target;
+});
+  tasksArray = filter;
   e.target.closest('.article__section1').remove();
-  // remove from array as well
-  // tasksArray.splice( ,1);
 }
 
 function getLists() {
@@ -126,7 +129,6 @@ function makeNewList(e) {
 function clearFormInputs() {
   taskTitle.value = "";
   taskItem.value = "";
-  // also remove task item list from aside
   tasksArray = [];
   taskItemList.innerHTML = '';
 }
@@ -144,13 +146,14 @@ function putArrayOfItemsInCard(tasksArray) {
   return newTasksArray;
 }
 
-function generateTaskItems({text}) {
+function generateTaskItems({list}) {
   taskItemList.insertAdjacentHTML ('beforeend',
  `<section class="article__section1">
    <img class="article__section--img1" src="images/delete.svg" alt="circle delete button">
    <p class="article__section--p">${taskItem.value}</p>
  </section>`)
   tasksArray.push(taskItem.value)
+  // console.log(data-id)
 };
 
 function generateTaskCard(list) {
