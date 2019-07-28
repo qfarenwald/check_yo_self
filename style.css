@@ -24,7 +24,7 @@ button:hover {
 
 button:disabled {
   background-color: #d0d2d3;
-  /* border: 1px solid #8f8f8f; */
+  /* make not the hand */
 }
 
 input:disabled {
