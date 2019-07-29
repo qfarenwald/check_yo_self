@@ -78,7 +78,7 @@ header {
 }
 
 .header__form--img {
-  background-color: #d7e0e2;
+  background-color: #aec7d4;
   border: none;
   border-radius: 2px 0px 0px 2px;
   width: 52px;
@@ -170,7 +170,7 @@ main {
 
 .main__article {
   background-color: #FFFFFF;
-  border: 2px solid #d7e0e2;
+  border: 2px solid #aec7d4;
   display: inline-block;
   margin:  0.75rem;
   width: 90%;
@@ -182,7 +182,7 @@ main {
 }
 
 hr {
-  border: 1px solid #d7e0e2;
+  border: 1px solid #aec7d4;
 }
 
 .article__section1 {
