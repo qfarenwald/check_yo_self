@@ -10,11 +10,10 @@ class ToDoList {
     localStorage.setItem('theLists', JSON.stringify(listsArray));
   }
 
-  // deleteFromStorage(index) {
-  //   listsArray.splice(index, 1);
-  //   saveToStorage(listsArray);
-  // }
-  // will get error till index is found
+  deleteFromStorage(index) {
+    listsArray.splice(index, 1);
+    saveToStorage(listsArray);
+  }
 
   updateToDo() {
 

@@ -33,9 +33,6 @@ function asideHandlerClick(e) {
     makeNewList(e);
     enableMakeTaskListBtn(e);
     enableClearAllBtn(e);
-    // generateTaskCard(list);
-    // generateTaskItems(e);
-    // putArrayOfItemsInCard(tasksArray);
   }
 
   if (e.target.closest('.aside__img')) {
