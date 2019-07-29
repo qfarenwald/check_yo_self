@@ -14,6 +14,7 @@ var deleteItemBtn = document.querySelector('.article__section--img1');
 var clearAllBtn = document.querySelector('#ClearAllBtn');
 
 getLists();
+console.log('listsArray', listsArray)
 reDisplayCards();
 
 // aside.addEventListener('keyup', asideHandlerKeyup);
@@ -33,7 +34,9 @@ function asideHandlerClick(e) {
     makeNewList(e);
     enableMakeTaskListBtn(e);
     enableClearAllBtn(e);
-    putArrayOfItemsInCard(tasksArray);
+    // generateTaskCard(list);
+    // generateTaskItems(e);
+    // putArrayOfItemsInCard(tasksArray);
   }
 
   if (e.target.closest('.aside__img')) {
@@ -86,19 +89,6 @@ function enableAddItemBtn(e) {
   }
 }
 
-// function getId(e) {
-//   var findId = e.target.closest('.article').getAttribute('data-id');
-//   console.log('duck', findId)
-//   // var index = listsArray.findIndex(function(list) {
-//   //   return list.id == findId;
-//   //   console.log('whaleshark', findId)
-// // })
-// // if (e.target.classList[0] === "article__section--img3") {
-// //   deleteList(e, index);
-// //  }
-// //     return index;
-// }
-
 function deleteList(e) {
   var target = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
   var filter = listsArray.filter(function(obj) {
@@ -121,35 +111,15 @@ function deleteItem(e){
   e.target.closest('.article__section1').remove();
 }
 
-function getLists() {
-  if (JSON.parse(localStorage.getItem('theLists')) === null) {
-  } else {
-  listsArray = JSON.parse(localStorage.getItem('theLists')).map(function(obj) {
-    console.log('obj', obj)
-    return new ToDoList(obj.id, obj.title, obj.tasks, obj.urgent);
-    });
-  }
-}
-
-function reDisplayCards() {
-  for (var i = 0; i < listsArray.length; i++) {
-    generateTaskCard(listsArray[i]);
-  }
-}
-
 function makeNewList(e) {
   e.preventDefault();
   var list = new ToDoList(Date.now(), taskTitle.value);
   listsArray.push(list);
   createObjectOfItems(list);
-  list.saveToStorage(listsArray);
   generateTaskCard(list);
-  console.log('wat', list)
+  list.saveToStorage(listsArray);
+  // moved save to storage below generateTaskCard
   clearFormInputs();
-  // should i return id here?
-  // var id = list.id;
-  // return id;
-  // console.log('fire', id)
 }
 
 function clearFormInputs() {
@@ -159,23 +129,25 @@ function clearFormInputs() {
   taskItemList.innerHTML = '';
 }
 
-function putArrayOfItemsInCard(tasksArray) {
-  var newTasksArray = [];
-  for(var i = 0; i < tasksArray.length; i++){
-   var codeBlock = `<section class="article__section1">
-   <img class="article__section--img1" src="images/checkbox.svg" alt="circle checkbox button">
-     <p class="article__section--p" data-id=${tasksArray[i].id}>${tasksArray[i].task}</p>
-     </section>`;
-   newTasksArray.push(codeBlock);
-  }
-  newTasksArray.join(" ");
-  return newTasksArray;
-}
+// function putArrayOfItemsInCard(tasksArray) {
+//   var newTasksArray = [];
+//   for(var i = 0; i < tasksArray.length; i++){
+//    var codeBlock = `<section class="article__section1">
+//    <img class="article__section--img1" src="images/checkbox.svg" alt="circle checkbox button">
+//      <p class="article__section--p" data-id=${tasksArray[i].id}>${tasksArray[i].task}</p>
+//      </section>`;
+//    newTasksArray.push(codeBlock);
+//   }
+//   newTasksArray.join(" ");
+//   return newTasksArray;
+// }
 
 function createObjectOfItems(list){
   for(var i = 0; i < tasksArray.length; i++){
     list.tasks.push({check: false, item: tasksArray[i].task, id: tasksArray[i].id});
   }
+  // list.saveToStorage(listsArray);
+  // just put this in here
 }
 
 function generateTaskItems({list}) {
@@ -200,7 +172,7 @@ function returnTaskElements(list) {
 }
 
 function generateTaskCard(list) {
-  // for loop and return image tag and p tag
+  // returnTaskElements not persisting
   main.insertAdjacentHTML ('afterbegin',
  `<article class="main__article" data-id=${list.id}>
    <h2 class="article__h2">${list.title}</h2>
@@ -226,5 +198,21 @@ function listMessage() {
     paragraph.classList.remove('hidden');
   } else if (listsArray.length !== 0) {
     paragraph.classList.add('hidden');
+  }
+}
+
+function getLists() {
+  if (JSON.parse(localStorage.getItem('theLists')) === null) {
+  } else {
+  listsArray = JSON.parse(localStorage.getItem('theLists')).map(function(obj) {
+    return new ToDoList(obj.id, obj.title, obj.tasks, obj.urgent);
+    });
+  }
+}
+
+function reDisplayCards() {
+  for (var i = 0; i < listsArray.length; i++) {
+    generateTaskCard(listsArray[i]);
+    console.log('listsArray[i]', listsArray[i])
   }
 }

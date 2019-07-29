@@ -1,19 +1,19 @@
 class ToDoList {
-  constructor(id, title) {
+  constructor(id, title, tasks, urgent) {
     this.id = id || Date.now();
     this.title = title;
-    this.tasks = [];
-    this.urgent = false;
+    this.tasks = tasks || [];
+    this.urgent = urgent;
   }
 
   saveToStorage(listsArray) {
     localStorage.setItem('theLists', JSON.stringify(listsArray));
   }
 
-  deleteFromStorage(index) {
-    listsArray.splice(index, 1);
-    saveToStorage(listsArray);
-  }
+  // deleteFromStorage(index) {
+  //   listsArray.splice(index, 1);
+  //   saveToStorage(listsArray);
+  // }
   // will get error till index is found
 
   updateToDo() {
@@ -24,8 +24,3 @@ class ToDoList {
 
   }
 }
-
-// step 1: on function that gets info, then invokes the next two
-// step 1a: make constuctor with empty array
-// step 1b: make function that puts objects in array
-// like sphinx
