@@ -107,11 +107,10 @@ function deleteList(e, index) {
 // will not work till index is found
 
 function deleteItem(e){
-  var target = e.target.parentNode.childNodes[3].innerText;
-  console.log('nice', target)
-  var filter = tasksArray.filter(function(string) {
-    return string !== target;
-});
+  var target = e.target.parentNode.childNodes[3].dataset.id;
+  var filter = tasksArray.filter(function(obj) {
+      return obj.id !== target;
+})
   tasksArray = filter;
   e.target.closest('.article__section1').remove();
 }
