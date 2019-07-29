@@ -86,41 +86,47 @@ function enableAddItemBtn(e) {
   }
 }
 
-function getId(e) {
-  var findId = e.target.closest('.article').getAttribute('data-id');
-  console.log('duck', findId)
-  // var index = listsArray.findIndex(function(list) {
-  //   return list.id == findId;
-  //   console.log('whaleshark', findId)
-// })
-// if (e.target.classList[0] === "article__section--img3") {
-//   deleteList(e, index);
-//  }
-//     return index;
-}
+// function getId(e) {
+//   var findId = e.target.closest('.article').getAttribute('data-id');
+//   console.log('duck', findId)
+//   // var index = listsArray.findIndex(function(list) {
+//   //   return list.id == findId;
+//   //   console.log('whaleshark', findId)
+// // })
+// // if (e.target.classList[0] === "article__section--img3") {
+// //   deleteList(e, index);
+// //  }
+// //     return index;
+// }
 
-function deleteList(e, index) {
+function deleteList(e) {
+  var target = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
+  var filter = listsArray.filter(function(obj) {
+      return obj.id !== target;
+})
+  listsArray = filter;
+  var list = new ToDoList(Date.now(), taskTitle.value);
+  list.saveToStorage(listsArray);
   e.target.closest('article').remove();
-  listsArray[index].deleteFromStorage(index);
-  listMessage();
 }
-// will not work till index is found
 
 function deleteItem(e){
-  var target = e.target.parentNode.childNodes[3].innerText;
-  console.log('nice', target)
-  var filter = tasksArray.filter(function(string) {
-    return string !== target;
-});
+  var target = parseInt(e.target.parentNode.childNodes[3].dataset.id);
+  var filter = tasksArray.filter(function(obj) {
+      return obj.id !== target;
+})
   tasksArray = filter;
+  var list = new ToDoList(Date.now(), taskTitle.value);
+  list.saveToStorage(listsArray);
   e.target.closest('.article__section1').remove();
 }
 
 function getLists() {
   if (JSON.parse(localStorage.getItem('theLists')) === null) {
   } else {
-  listsArray = JSON.parse(localStorage.getItem('theLists')).map(function({id, title}) {
-    return new ToDoList(id, title);
+  listsArray = JSON.parse(localStorage.getItem('theLists')).map(function(obj) {
+    console.log('obj', obj)
+    return new ToDoList(obj.id, obj.title, obj.tasks, obj.urgent);
     });
   }
 }
@@ -134,10 +140,11 @@ function reDisplayCards() {
 function makeNewList(e) {
   e.preventDefault();
   var list = new ToDoList(Date.now(), taskTitle.value);
-  createObjectOfItems(list);
   listsArray.push(list);
+  createObjectOfItems(list);
   list.saveToStorage(listsArray);
   generateTaskCard(list);
+  console.log('wat', list)
   clearFormInputs();
   // should i return id here?
   // var id = list.id;
@@ -157,7 +164,7 @@ function putArrayOfItemsInCard(tasksArray) {
   for(var i = 0; i < tasksArray.length; i++){
    var codeBlock = `<section class="article__section1">
    <img class="article__section--img1" src="images/checkbox.svg" alt="circle checkbox button">
-     <p class="article__section--p">${tasksArray[i]}</p>
+     <p class="article__section--p" data-id=${tasksArray[i].id}>${tasksArray[i].task}</p>
      </section>`;
    newTasksArray.push(codeBlock);
   }
@@ -165,13 +172,9 @@ function putArrayOfItemsInCard(tasksArray) {
   return newTasksArray;
 }
 
-// create function that turns tasksArray into objects
-// in this function, loop through tasksArray, for each pass, create object and fill in index item: with the array string at that index
-// check: false
-// when done, envoke in makeNewList(e) function where larger new instance is being created
 function createObjectOfItems(list){
   for(var i = 0; i < tasksArray.length; i++){
-    list.tasks.push({check: false, item: tasksArray[i]});
+    list.tasks.push({check: false, item: tasksArray[i].task, id: tasksArray[i].id});
   }
 }
 
@@ -179,19 +182,30 @@ function generateTaskItems({list}) {
   taskItemList.insertAdjacentHTML ('beforeend',
  `<section class="article__section1">
    <img class="article__section--img1" src="images/delete.svg" alt="circle delete button">
-   <p class="article__section--p">${taskItem.value}</p>
+   <p class="article__section--p" data-id=${Date.now()}>${taskItem.value}</p>
  </section>`)
-  tasksArray.push(taskItem.value)
-  // console.log(data-id)
+  tasksArray.push({task: taskItem.value, id: Date.now()});
 };
 
+function returnTaskElements(list) {
+  var codeBlock = "";
+  console.log('list.tasks', list.tasks)
+  for(var i = 0; i < list.tasks.length; i++){
+  codeBlock += `<section class="article__section1">
+  <img class="article__section--img1" src="images/checkbox.svg" alt="circle checkbox button">
+    <p class="article__section--p" data-id=${list.tasks[i].id}>${list.tasks[i].item}</p>
+    </section>`;
+  }
+  return codeBlock;
+}
+
 function generateTaskCard(list) {
-  var joinTaskArray = putArrayOfItemsInCard(tasksArray)
+  // for loop and return image tag and p tag
   main.insertAdjacentHTML ('afterbegin',
  `<article class="main__article" data-id=${list.id}>
    <h2 class="article__h2">${list.title}</h2>
    <hr>
-   ${joinTaskArray}
+   ${returnTaskElements(list)}
    <hr>
    <section class="article__section2">
      <div class="article__section2--container">
@@ -205,7 +219,6 @@ function generateTaskCard(list) {
    </section>
  </article>`)
  listMessage();
- console.log('dragon', list.id)
 };
 
 function listMessage() {
