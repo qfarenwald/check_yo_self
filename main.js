@@ -105,7 +105,8 @@ function deleteList(e) {
       return obj.id !== target;
 })
   listsArray = filter;
-  console.log('listsArray', listsArray)
+  var list = new ToDoList(Date.now(), taskTitle.value);
+  list.saveToStorage(listsArray);
   e.target.closest('article').remove();
 }
 
@@ -115,14 +116,17 @@ function deleteItem(e){
       return obj.id !== target;
 })
   tasksArray = filter;
+  var list = new ToDoList(Date.now(), taskTitle.value);
+  list.saveToStorage(listsArray);
   e.target.closest('.article__section1').remove();
 }
 
 function getLists() {
   if (JSON.parse(localStorage.getItem('theLists')) === null) {
   } else {
-  listsArray = JSON.parse(localStorage.getItem('theLists')).map(function({id, title}) {
-    return new ToDoList(id, title);
+  listsArray = JSON.parse(localStorage.getItem('theLists')).map(function(obj) {
+    console.log('obj', obj)
+    return new ToDoList(obj.id, obj.title, obj.tasks, obj.urgent);
     });
   }
 }
@@ -136,8 +140,8 @@ function reDisplayCards() {
 function makeNewList(e) {
   e.preventDefault();
   var list = new ToDoList(Date.now(), taskTitle.value);
-  createObjectOfItems(list);
   listsArray.push(list);
+  createObjectOfItems(list);
   list.saveToStorage(listsArray);
   generateTaskCard(list);
   console.log('wat', list)
@@ -183,13 +187,25 @@ function generateTaskItems({list}) {
   tasksArray.push({task: taskItem.value, id: Date.now()});
 };
 
+function returnTaskElements(list) {
+  var codeBlock = "";
+  console.log('list.tasks', list.tasks)
+  for(var i = 0; i < list.tasks.length; i++){
+  codeBlock += `<section class="article__section1">
+  <img class="article__section--img1" src="images/checkbox.svg" alt="circle checkbox button">
+    <p class="article__section--p" data-id=${list.tasks[i].id}>${list.tasks[i].item}</p>
+    </section>`;
+  }
+  return codeBlock;
+}
+
 function generateTaskCard(list) {
-  var joinTaskArray = putArrayOfItemsInCard(tasksArray)
+  // for loop and return image tag and p tag
   main.insertAdjacentHTML ('afterbegin',
  `<article class="main__article" data-id=${list.id}>
    <h2 class="article__h2">${list.title}</h2>
    <hr>
-   ${joinTaskArray}
+   ${returnTaskElements(list)}
    <hr>
    <section class="article__section2">
      <div class="article__section2--container">
