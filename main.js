@@ -103,9 +103,12 @@ function deleteList(e) {
 function deleteItem(e){
   var target = parseInt(e.target.parentNode.childNodes[3].dataset.id);
   var filter = tasksArray.filter(function(obj) {
+    console.log('obj', obj)
+    console.log('target', target)
       return obj.id !== target;
 })
   tasksArray = filter;
+  console.log('tasksArray', tasksArray)
   var list = new ToDoList(Date.now(), taskTitle.value);
   list.saveToStorage(listsArray);
   e.target.closest('.article__section1').remove();
@@ -135,12 +138,13 @@ function createObjectOfItems(list){
 }
 
 function generateTaskItems({list}) {
+  var dateId = Date.now();
   taskItemList.insertAdjacentHTML ('beforeend',
  `<section class="article__section1">
    <img class="article__section--img1" src="images/delete.svg" alt="circle delete button">
-   <p class="article__section--p" data-id=${Date.now()}>${taskItem.value}</p>
+   <p class="article__section--p" data-id=${dateId}>${taskItem.value}</p>
  </section>`)
-  tasksArray.push({task: taskItem.value, id: Date.now()});
+  tasksArray.push({task: taskItem.value, id: dateId});
 };
 
 function returnTaskElements(list) {
