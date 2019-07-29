@@ -86,28 +86,31 @@ function enableAddItemBtn(e) {
   }
 }
 
-function getId(e) {
-  var findId = e.target.closest('.article').getAttribute('data-id');
-  console.log('duck', findId)
-  // var index = listsArray.findIndex(function(list) {
-  //   return list.id == findId;
-  //   console.log('whaleshark', findId)
-// })
-// if (e.target.classList[0] === "article__section--img3") {
-//   deleteList(e, index);
-//  }
-//     return index;
-}
+// function getId(e) {
+//   var findId = e.target.closest('.article').getAttribute('data-id');
+//   console.log('duck', findId)
+//   // var index = listsArray.findIndex(function(list) {
+//   //   return list.id == findId;
+//   //   console.log('whaleshark', findId)
+// // })
+// // if (e.target.classList[0] === "article__section--img3") {
+// //   deleteList(e, index);
+// //  }
+// //     return index;
+// }
 
-function deleteList(e, index) {
+function deleteList(e) {
+  var target = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
+  var filter = listsArray.filter(function(obj) {
+      return obj.id !== target;
+})
+  listsArray = filter;
+  console.log('listsArray', listsArray)
   e.target.closest('article').remove();
-  listsArray[index].deleteFromStorage(index);
-  listMessage();
 }
-// will not work till index is found
 
 function deleteItem(e){
-  var target = e.target.parentNode.childNodes[3].dataset.id;
+  var target = parseInt(e.target.parentNode.childNodes[3].dataset.id);
   var filter = tasksArray.filter(function(obj) {
       return obj.id !== target;
 })
@@ -200,7 +203,6 @@ function generateTaskCard(list) {
    </section>
  </article>`)
  listMessage();
- console.log('dragon', list.id)
 };
 
 function listMessage() {
