@@ -165,13 +165,9 @@ function putArrayOfItemsInCard(tasksArray) {
   return newTasksArray;
 }
 
-// create function that turns tasksArray into objects
-// in this function, loop through tasksArray, for each pass, create object and fill in index item: with the array string at that index
-// check: false
-// when done, envoke in makeNewList(e) function where larger new instance is being created
 function createObjectOfItems(list){
   for(var i = 0; i < tasksArray.length; i++){
-    list.tasks.push({check: false, item: tasksArray[i]});
+    list.tasks.push({check: false, item: tasksArray[i], id: Date.now()});
   }
 }
 
