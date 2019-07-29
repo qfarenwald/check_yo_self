@@ -138,6 +138,7 @@ function makeNewList(e) {
   listsArray.push(list);
   list.saveToStorage(listsArray);
   generateTaskCard(list);
+  console.log('wat', list)
   clearFormInputs();
   // should i return id here?
   // var id = list.id;
@@ -157,7 +158,7 @@ function putArrayOfItemsInCard(tasksArray) {
   for(var i = 0; i < tasksArray.length; i++){
    var codeBlock = `<section class="article__section1">
    <img class="article__section--img1" src="images/checkbox.svg" alt="circle checkbox button">
-     <p class="article__section--p">${tasksArray[i]}</p>
+     <p class="article__section--p" data-id=${tasksArray[i].id}>${tasksArray[i].task}</p>
      </section>`;
    newTasksArray.push(codeBlock);
   }
@@ -167,7 +168,7 @@ function putArrayOfItemsInCard(tasksArray) {
 
 function createObjectOfItems(list){
   for(var i = 0; i < tasksArray.length; i++){
-    list.tasks.push({check: false, item: tasksArray[i], id: Date.now()});
+    list.tasks.push({check: false, item: tasksArray[i].task, id: tasksArray[i].id});
   }
 }
 
@@ -175,10 +176,9 @@ function generateTaskItems({list}) {
   taskItemList.insertAdjacentHTML ('beforeend',
  `<section class="article__section1">
    <img class="article__section--img1" src="images/delete.svg" alt="circle delete button">
-   <p class="article__section--p">${taskItem.value}</p>
+   <p class="article__section--p" data-id=${Date.now()}>${taskItem.value}</p>
  </section>`)
-  tasksArray.push(taskItem.value)
-  // console.log(data-id)
+  tasksArray.push({task: taskItem.value, id: Date.now()});
 };
 
 function generateTaskCard(list) {
