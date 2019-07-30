@@ -57,11 +57,6 @@ function asideHandlerClick(e) {
 
 function mainHandler(e) {
   if (e.target.closest('.article__section--img3')) {
-    // findId(e);
-    // console.log('ID', findId(e))
-    // // testing ID---WORKS
-    // findIndex(e)
-    // console.log('INDEX', findIndex(e))
     deleteList(e);
   }
 
@@ -104,6 +99,11 @@ function findId(e) {
   }
 };
 
+function findIdOfItem(e) {
+  return parseInt(e.target.parentNode.childNodes[3].attributes[1].nodeValue);
+};
+
+
 function findIndex(e) {
   var id = findId(e);
   for (var i = 0; i < listsArray.length; i++) {
@@ -127,8 +127,8 @@ function deleteList(e) {
 }
 
 function deleteItem(e){
-  var target = parseInt(e.target.parentNode.childNodes[3].dataset.id);
-// refactor this line above once find item ID
+  var target = findIdOfItem(e);
+  // var target = parseInt(e.target.parentNode.childNodes[3].dataset.id);
   var filter = tasksArray.filter(function(obj) {
       return obj.id !== target;
 })
@@ -155,18 +155,35 @@ function clearFormInputs() {
   taskItemList.innerHTML = '';
 }
 
-// function toggleCheck(e) {
-//   var target = parseInt(e.target.parentNode.childNodes[3].attributes[1].nodeValue);
-//   console.log('target', target)
-//   console.log('listsArray', listsArray)
-//   for(var i = 0; i < tasksArray.length; i++){
-//     console.log('hello')
-//     if(obj.id === target) {
-//       obj.tasks.check = true;
-//     }
-//   }
-//   }
+function toggleCheck(e) {
+  var cardId = findId(e);
+  var cardIndex = findIndex(e);
+  var cardObject = listsArray.find(function(list) {
+   return list.id === cardId
+   })
+  var taskId = findIdOfItem(e);
+  var checkImg = e.target.closest('.article__section--img1');
+  var active = "images/checkbox-active.svg";
+  var inactive = "images/checkbox.svg";
 
+  console.log('one', listsArray)
+
+  for(var i = 0; i < cardObject.tasks.length; i++) {
+    if(cardObject.tasks[i].id === taskId) {
+      if(cardObject.tasks[i].check === false) {
+        cardObject.tasks[i].check = true;
+        checkImg.src = active;
+        listsArray[cardIndex].saveToStorage(listsArray);
+      }
+      else {
+        cardObject.tasks[i].check = false;
+        checkImg.src = inactive;
+        listsArray[cardIndex].saveToStorage(listsArray);
+      }
+    }
+  }
+    console.log('two', listsArray)
+}
 
 function createObjectOfItems(list){
   for(var i = 0; i < tasksArray.length; i++){
@@ -185,10 +202,12 @@ function generateTaskItems({list}) {
 };
 
 function returnTaskElements(list) {
+  // debugger;
+  var checkImg = list.tasks[i] ? "checkbox-active.svg" : "checkbox.svg";
   var codeBlock = "";
   for(var i = 0; i < list.tasks.length; i++){
   codeBlock += `<section class="article__section1">
-  <img class="article__section--img1" src="images/checkbox.svg" alt="circle checkbox button">
+  <img class="article__section--img1" src="images/${checkImg}" alt="circle checkbox button">
     <p class="article__section--p" data-id=${list.tasks[i].id}>${list.tasks[i].item}</p>
     </section>`;
   }
