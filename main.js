@@ -57,7 +57,16 @@ function asideHandlerClick(e) {
 
 function mainHandler(e) {
   if (e.target.closest('.article__section--img3')) {
+    // findId(e);
+    // console.log('ID', findId(e))
+    // // testing ID---WORKS
+    // findIndex(e)
+    // console.log('INDEX', findIndex(e))
     deleteList(e);
+  }
+
+  if(e.target.closest('.article__section--img1')) {
+    toggleCheck(e);
   }
 }
 
@@ -88,8 +97,25 @@ function enableAddItemBtn(e) {
   }
 }
 
+function findId(e) {
+  var card = event.target.closest('.main__article');
+  if (listsArray.length > 0 && card) {
+    return parseInt(event.target.closest('.main__article').dataset.id);
+  }
+};
+
+function findIndex(e) {
+  var id = findId(e);
+  for (var i = 0; i < listsArray.length; i++) {
+    if (id === listsArray[i].id) {
+      return parseInt(i);
+    }
+  }
+};
+
 function deleteList(e) {
-  var target = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
+  var target = findId(e);
+  // var target = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
   var filter = listsArray.filter(function(obj) {
       return obj.id !== target;
 })
@@ -102,13 +128,11 @@ function deleteList(e) {
 
 function deleteItem(e){
   var target = parseInt(e.target.parentNode.childNodes[3].dataset.id);
+// refactor this line above once find item ID
   var filter = tasksArray.filter(function(obj) {
-    console.log('obj', obj)
-    console.log('target', target)
       return obj.id !== target;
 })
   tasksArray = filter;
-  console.log('tasksArray', tasksArray)
   var list = new ToDoList(Date.now(), taskTitle.value);
   list.saveToStorage(listsArray);
   e.target.closest('.article__section1').remove();
@@ -130,6 +154,19 @@ function clearFormInputs() {
   tasksArray = [];
   taskItemList.innerHTML = '';
 }
+
+// function toggleCheck(e) {
+//   var target = parseInt(e.target.parentNode.childNodes[3].attributes[1].nodeValue);
+//   console.log('target', target)
+//   console.log('listsArray', listsArray)
+//   for(var i = 0; i < tasksArray.length; i++){
+//     console.log('hello')
+//     if(obj.id === target) {
+//       obj.tasks.check = true;
+//     }
+//   }
+//   }
+
 
 function createObjectOfItems(list){
   for(var i = 0; i < tasksArray.length; i++){

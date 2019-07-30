@@ -10,9 +10,9 @@ class ToDoList {
     localStorage.setItem('theLists', JSON.stringify(listsArray));
   }
 
-  deleteFromStorage(index) {
-    listsArray.splice(index, 1);
-    saveToStorage(listsArray);
+  deleteFromStorage(listsArray) {
+    // listsArray.splice(index, 1);
+    // this.saveToStorage(listsArray);
   }
 
   updateToDo() {
