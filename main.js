@@ -104,6 +104,11 @@ function findId(e) {
   }
 };
 
+function findIdOfItem(e) {
+  return parseInt(e.target.parentNode.childNodes[3].attributes[1].nodeValue);
+};
+
+
 function findIndex(e) {
   var id = findId(e);
   for (var i = 0; i < listsArray.length; i++) {
@@ -127,8 +132,8 @@ function deleteList(e) {
 }
 
 function deleteItem(e){
-  var target = parseInt(e.target.parentNode.childNodes[3].dataset.id);
-// refactor this line above once find item ID
+  var target = findIdOfItem(e);
+  // var target = parseInt(e.target.parentNode.childNodes[3].dataset.id);
   var filter = tasksArray.filter(function(obj) {
       return obj.id !== target;
 })
@@ -167,6 +172,25 @@ function clearFormInputs() {
 //   }
 //   }
 
+function toggleCheck(e) {
+  var cardId = findId(e)
+  var cardObject = listsArray.find(function(list) {
+   return list.id === cardId
+   })
+   console.log('cardObject', cardObject)
+   // .tasks;
+
+  var taskId = findIdOfItem(e);
+  console.log('taskId', taskId)
+
+  // var check = cardObject.find(function(item) {
+  //   if (item.id === taskId) {
+  //   return item.checked = !item.checked;
+  //   }
+  //   return check;
+  //   console.log('check', check)
+  })
+}
 
 function createObjectOfItems(list){
   for(var i = 0; i < tasksArray.length; i++){
