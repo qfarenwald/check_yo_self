@@ -114,11 +114,11 @@ function findIndex(e) {
 };
 
 function deleteList(e) {
-  var target = findId();
+  var target = findId(e);
+  // var target = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
   var filter = listsArray.filter(function(obj) {
       return obj.id !== target;
 })
-// refactor this
   listsArray = filter;
   var list = new ToDoList(Date.now(), taskTitle.value);
   list.saveToStorage(listsArray);
@@ -128,11 +128,10 @@ function deleteList(e) {
 
 function deleteItem(e){
   var target = parseInt(e.target.parentNode.childNodes[3].dataset.id);
-// refactor this line above once get id of item in function
+// refactor this line above once find item ID
   var filter = tasksArray.filter(function(obj) {
       return obj.id !== target;
 })
-// refactor this
   tasksArray = filter;
   var list = new ToDoList(Date.now(), taskTitle.value);
   list.saveToStorage(listsArray);
@@ -166,7 +165,7 @@ function clearFormInputs() {
 //       obj.tasks.check = true;
 //     }
 //   }
-// }
+//   }
 
 
 function createObjectOfItems(list){
