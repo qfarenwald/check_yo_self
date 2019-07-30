@@ -179,20 +179,21 @@ function toggleCheck(e) {
   var cardObject = listsArray.find(function(list) {
    return list.id === cardId
    })
-  console.log('cardObject', cardObject)
   var taskId = findIdOfItem(e);
-  console.log('taskId', taskId)
-  console.log('cardObjTask', cardObject.tasks[0].check)
-  console.log('cardObjid', cardObject.tasks[0].id)
+  var checkImg = e.target.closest('.article__section--img1');
+  var active = "images/checkbox-active.svg";
+  var inactive = "images/checkbox.svg";
 
   for(var i = 0; i < cardObject.tasks.length; i++) {
     if(cardObject.tasks[i].id === taskId) {
       if(cardObject.tasks[i].check === false) {
         cardObject.tasks[i].check = true;
+        checkImg.src = active;
         listsArray[cardIndex].saveToStorage(listsArray);
       }
       else {
         cardObject.tasks[i].check = false;
+        checkImg.src = inactive;
         listsArray[cardIndex].saveToStorage(listsArray);
       }
     }
