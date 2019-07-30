@@ -186,22 +186,17 @@ function toggleCheck(e) {
   console.log('cardObjid', cardObject.tasks[0].id)
 
   for(var i = 0; i < cardObject.tasks.length; i++) {
+    if(cardObject.tasks[i].id === taskId) {
       if(cardObject.tasks[i].check === false) {
         cardObject.tasks[i].check = true;
         listsArray[cardIndex].saveToStorage(listsArray);
-        // return true;
       }
-      else
-      // (cardObject.tasks[i].check === true) 
-      {
+      else {
         cardObject.tasks[i].check = false;
         listsArray[cardIndex].saveToStorage(listsArray);
-        // return false;
       }
     }
-    // var list = new ToDoList(Date.now(), taskTitle.value);
-    // createObjectOfItems(list);
-    // listsArray[cardIndex].saveToStorage(listsArray);
+  }
 }
 
 function createObjectOfItems(list){
