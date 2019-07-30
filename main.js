@@ -177,19 +177,25 @@ function toggleCheck(e) {
   var cardObject = listsArray.find(function(list) {
    return list.id === cardId
    })
-   console.log('cardObject', cardObject)
-   // .tasks;
-
+  console.log('cardObject', cardObject)
   var taskId = findIdOfItem(e);
   console.log('taskId', taskId)
 
-  // var check = cardObject.find(function(item) {
-  //   if (item.id === taskId) {
-  //   return item.checked = !item.checked;
-  //   }
-  //   return check;
-  //   console.log('check', check)
-  })
+  console.log('cardObjTask', cardObject.tasks[0].check)
+  console.log('cardObjid', cardObject.tasks[0].id)
+
+  for(var i = 0; i < cardObject.tasks.length; i++) {
+    // if(cardObject.tasks[i].id === taskId) {
+      if(cardObject.tasks[i].check === false) {
+        cardObject.tasks[i].check = true;
+        return true;
+      }
+      if(cardObject.tasks[i].check === true) {
+        cardObject.tasks[i].check = false;
+        return false;
+      }
+    // }
+  }
 }
 
 function createObjectOfItems(list){
