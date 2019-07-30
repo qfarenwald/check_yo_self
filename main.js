@@ -57,11 +57,6 @@ function asideHandlerClick(e) {
 
 function mainHandler(e) {
   if (e.target.closest('.article__section--img3')) {
-    // findId(e);
-    // console.log('ID', findId(e))
-    // // testing ID---WORKS
-    // findIndex(e)
-    // console.log('INDEX', findIndex(e))
     deleteList(e);
   }
 
@@ -118,19 +113,6 @@ function findIndex(e) {
   }
 };
 
-// function deleteList(e) {
-//   var target = findId(e);
-//   // var target = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
-//   e.target.closest('article').remove();
-//   listMessage();
-//   var filter = listsArray.filter(function(obj) {
-//       obj.id !== target;
-// })
-//
-//   // var list = new ToDoList(Date.now(), taskTitle.value);
-//   filter.saveToStorage(listsArray);
-// }
-
 function deleteList(e) {
   var target = findId(e);
   // var target = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
@@ -184,6 +166,8 @@ function toggleCheck(e) {
   var active = "images/checkbox-active.svg";
   var inactive = "images/checkbox.svg";
 
+  console.log('one', listsArray)
+
   for(var i = 0; i < cardObject.tasks.length; i++) {
     if(cardObject.tasks[i].id === taskId) {
       if(cardObject.tasks[i].check === false) {
@@ -198,6 +182,7 @@ function toggleCheck(e) {
       }
     }
   }
+    console.log('two', listsArray)
 }
 
 function createObjectOfItems(list){
@@ -217,10 +202,12 @@ function generateTaskItems({list}) {
 };
 
 function returnTaskElements(list) {
+  // debugger;
+  var checkImg = list.tasks[i] ? "checkbox-active.svg" : "checkbox.svg";
   var codeBlock = "";
   for(var i = 0; i < list.tasks.length; i++){
   codeBlock += `<section class="article__section1">
-  <img class="article__section--img1" src="images/checkbox.svg" alt="circle checkbox button">
+  <img class="article__section--img1" src="images/${checkImg}" alt="circle checkbox button">
     <p class="article__section--p" data-id=${list.tasks[i].id}>${list.tasks[i].item}</p>
     </section>`;
   }
