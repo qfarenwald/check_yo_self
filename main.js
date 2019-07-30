@@ -202,16 +202,20 @@ function generateTaskItems({list}) {
 };
 
 function returnTaskElements(list) {
-  // debugger;
-  var checkImg = list.tasks[i] ? "checkbox-active.svg" : "checkbox.svg";
   var codeBlock = "";
   for(var i = 0; i < list.tasks.length; i++){
   codeBlock += `<section class="article__section1">
-  <img class="article__section--img1" src="images/${checkImg}" alt="circle checkbox button">
+  <img class="article__section--img1" src="images/${getCheckBoxImage(list.tasks[i].check)}" alt="circle checkbox button">
     <p class="article__section--p" data-id=${list.tasks[i].id}>${list.tasks[i].item}</p>
     </section>`;
   }
   return codeBlock;
+}
+
+function getCheckBoxImage(listTask) {
+  var img = null;
+  listTask ? img = "checkbox-active.svg" : img = "checkbox.svg";
+  return img;
 }
 
 function generateTaskCard(list) {
