@@ -118,6 +118,19 @@ function findIndex(e) {
   }
 };
 
+// function deleteList(e) {
+//   var target = findId(e);
+//   // var target = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
+//   e.target.closest('article').remove();
+//   listMessage();
+//   var filter = listsArray.filter(function(obj) {
+//       obj.id !== target;
+// })
+//
+//   // var list = new ToDoList(Date.now(), taskTitle.value);
+//   filter.saveToStorage(listsArray);
+// }
+
 function deleteList(e) {
   var target = findId(e);
   // var target = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
@@ -160,42 +173,35 @@ function clearFormInputs() {
   taskItemList.innerHTML = '';
 }
 
-// function toggleCheck(e) {
-//   var target = parseInt(e.target.parentNode.childNodes[3].attributes[1].nodeValue);
-//   console.log('target', target)
-//   console.log('listsArray', listsArray)
-//   for(var i = 0; i < tasksArray.length; i++){
-//     console.log('hello')
-//     if(obj.id === target) {
-//       obj.tasks.check = true;
-//     }
-//   }
-//   }
-
 function toggleCheck(e) {
-  var cardId = findId(e)
+  var cardId = findId(e);
+  var cardIndex = findIndex(e);
   var cardObject = listsArray.find(function(list) {
    return list.id === cardId
    })
   console.log('cardObject', cardObject)
   var taskId = findIdOfItem(e);
   console.log('taskId', taskId)
-
   console.log('cardObjTask', cardObject.tasks[0].check)
   console.log('cardObjid', cardObject.tasks[0].id)
 
   for(var i = 0; i < cardObject.tasks.length; i++) {
-    // if(cardObject.tasks[i].id === taskId) {
       if(cardObject.tasks[i].check === false) {
         cardObject.tasks[i].check = true;
-        return true;
+        listsArray[cardIndex].saveToStorage(listsArray);
+        // return true;
       }
-      if(cardObject.tasks[i].check === true) {
+      else
+      // (cardObject.tasks[i].check === true) 
+      {
         cardObject.tasks[i].check = false;
-        return false;
+        listsArray[cardIndex].saveToStorage(listsArray);
+        // return false;
       }
-    // }
-  }
+    }
+    // var list = new ToDoList(Date.now(), taskTitle.value);
+    // createObjectOfItems(list);
+    // listsArray[cardIndex].saveToStorage(listsArray);
 }
 
 function createObjectOfItems(list){
