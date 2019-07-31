@@ -13,11 +13,6 @@ class ToDoList {
   deleteFromStorage(e, index) {
     listsArray.splice(index, 1);
     this.saveToStorage(listsArray);
-
-  }
-
-  updateToDo() {
-
   }
 
   updateTask(listsArray, update) {

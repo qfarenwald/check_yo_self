@@ -24,7 +24,6 @@ button:hover {
 
 button:disabled {
   background-color: #d0d2d3;
-  /* make not the hand */
 }
 
 input:disabled {
@@ -95,7 +94,6 @@ header {
 aside {
   background-color: #587A8A;
   grid-area: aside;
-  /* padding: 15px; */
 }
 
 .aside__h3 {
