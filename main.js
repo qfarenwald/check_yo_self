@@ -113,22 +113,27 @@ function findIndex(e) {
   }
 };
 
-function deleteList(e) {
-  var target = findId(e);
-  // var target = parseInt(e.target.parentNode.parentNode.parentNode.dataset.id);
-  var filter = listsArray.filter(function(obj) {
-      return obj.id !== target;
-})
-  listsArray = filter;
-  var list = new ToDoList(Date.now(), taskTitle.value);
-  list.saveToStorage(listsArray);
+// function deleteList(e) {
+//   var target = findId(e);
+//   var filter = listsArray.filter(function(obj) {
+//       return obj.id !== target;
+// })
+//   listsArray = filter;
+//   var list = new ToDoList(Date.now(), taskTitle.value);
+//   list.saveToStorage(listsArray);
+//   e.target.closest('article').remove();
+//   listMessage();
+// }
+
+function deleteList(e, index) {
+  var cardIndex = findIndex(e);
   e.target.closest('article').remove();
+  listsArray[cardIndex].deleteFromStorage(listsArray);
   listMessage();
 }
 
 function deleteItem(e){
   var target = findIdOfItem(e);
-  // var target = parseInt(e.target.parentNode.childNodes[3].dataset.id);
   var filter = tasksArray.filter(function(obj) {
       return obj.id !== target;
 })
