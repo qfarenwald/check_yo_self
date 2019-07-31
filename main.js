@@ -113,18 +113,6 @@ function findIndex(e) {
   }
 };
 
-// function deleteList(e) {
-//   var target = findId(e);
-//   var filter = listsArray.filter(function(obj) {
-//       return obj.id !== target;
-// })
-//   listsArray = filter;
-//   var list = new ToDoList(Date.now(), taskTitle.value);
-//   list.saveToStorage(listsArray);
-//   e.target.closest('article').remove();
-//   listMessage();
-// }
-
 function deleteList(e, index) {
   var cardIndex = findIndex(e);
   e.target.closest('article').remove();
@@ -136,7 +124,7 @@ function deleteItem(e){
   var target = findIdOfItem(e);
   var filter = tasksArray.filter(function(obj) {
       return obj.id !== target;
-})
+    })
   tasksArray = filter;
   var list = new ToDoList(Date.now(), taskTitle.value);
   list.saveToStorage(listsArray);
