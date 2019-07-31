@@ -152,30 +152,26 @@ function toggleCheck(e) {
   var cardId = findId(e);
   var cardIndex = findIndex(e);
   var cardObject = listsArray.find(function(list) {
-   return list.id === cardId
+    return list.id === cardId
    })
   var taskId = findIdOfItem(e);
   var checkImg = e.target.closest('.article__section--img1');
   var active = "images/checkbox-active.svg";
   var inactive = "images/checkbox.svg";
 
-  console.log('one', listsArray)
-
   for(var i = 0; i < cardObject.tasks.length; i++) {
     if(cardObject.tasks[i].id === taskId) {
       if(cardObject.tasks[i].check === false) {
         cardObject.tasks[i].check = true;
         checkImg.src = active;
-        listsArray[cardIndex].saveToStorage(listsArray);
-      }
-      else {
+        listsArray[cardIndex].updateTask(listsArray, true);
+      } else {
         cardObject.tasks[i].check = false;
         checkImg.src = inactive;
-        listsArray[cardIndex].saveToStorage(listsArray);
+        listsArray[cardIndex].updateTask(listsArray);
       }
     }
   }
-    console.log('two', listsArray)
 }
 
 function createObjectOfItems(list){

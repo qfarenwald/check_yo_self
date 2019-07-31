@@ -20,7 +20,8 @@ class ToDoList {
 
   }
 
-  updateTask() {
-
+  updateTask(listsArray, update) {
+    this.tasks.check = update;
+    this.saveToStorage(listsArray);
   }
 }
