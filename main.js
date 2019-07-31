@@ -103,7 +103,6 @@ function findIdOfItem(e) {
   return parseInt(e.target.parentNode.childNodes[3].attributes[1].nodeValue);
 };
 
-
 function findIndex(e) {
   var id = findId(e);
   for (var i = 0; i < listsArray.length; i++) {
@@ -113,11 +112,28 @@ function findIndex(e) {
   }
 };
 
-function deleteList(e, index) {
+function countTrue(e) {
   var cardIndex = findIndex(e);
-  e.target.closest('article').remove();
-  listsArray[cardIndex].deleteFromStorage(listsArray);
-  listMessage();
+  var newTaskArray = listsArray[cardIndex].tasks;
+  var count = 0;
+  for(var i = 0; i < newTaskArray.length; i++){
+console.log(newTaskArray[i])
+    if (newTaskArray[i].check === true) {
+      ++count;
+    }
+    console.log(count, newTaskArray.length)
+  }
+  return count === newTaskArray.length ? true : false;
+}
+
+function deleteList(e) {
+  var cardIndex = findIndex(e);
+  var trueCount = countTrue(e);
+  if (trueCount === true) {
+    e.target.closest('article').remove();
+    listsArray[cardIndex].deleteFromStorage(listsArray);
+    listMessage();
+  }
 }
 
 function deleteItem(e){
