@@ -13,12 +13,17 @@ var deleteItemBtn = document.querySelector('.article__section--img1');
 var clearAllBtn = document.querySelector('#ClearAllBtn');
 var taskItemHeading = document.querySelector('#TaskItemHeading');
 
-getLists();
-reDisplayCards();
+
 
 aside.addEventListener('click', asideHandlerClick);
 main.addEventListener('click', mainHandler);
 aside.addEventListener('keyup', asideHandlerKeyup);
+window.addEventListener('load', loadHandler)
+
+function loadHandler() {
+  getLists();
+  reDisplayCards();
+}
 
 function asideHandlerKeyup(e) {
   e.preventDefault(e);
@@ -128,7 +133,7 @@ function deleteList(e) {
   var trueCount = countTrue(e);
   if (trueCount === true) {
     e.target.closest('article').remove();
-    listsArray[cardIndex].deleteFromStorage(listsArray);
+    listsArray[cardIndex].deleteFromStorage(cardIndex, listsArray);
     listMessage();
   }
 }
@@ -176,7 +181,7 @@ function toggleCheck(e) {
       if(cardObject.tasks[i].check === false) {
         cardObject.tasks[i].check = true;
         checkImg.src = active;
-        listsArray[cardIndex].updateTask(listsArray, true);
+        listsArray[cardIndex].updateTask(listsArray);
       } else {
         cardObject.tasks[i].check = false;
         checkImg.src = inactive;
