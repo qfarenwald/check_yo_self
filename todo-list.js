@@ -3,7 +3,7 @@ class ToDoList {
     this.id = id || Date.now();
     this.title = title;
     this.tasks = tasks || [];
-    this.urgent = urgent;
+    this.urgent = urgent || false;
   }
 
   saveToStorage(listsArray) {
@@ -16,6 +16,10 @@ class ToDoList {
   }
 
   updateTask(listsArray) {
+    this.saveToStorage(listsArray);
+  }
+
+  updateToDo(listsArray) {
     this.saveToStorage(listsArray);
   }
 }

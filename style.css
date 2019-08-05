@@ -174,6 +174,11 @@ main {
   width: 90%;
 }
 
+.main__article--urgent {
+  background-color: #ffe89d;
+  border: 2px solid #ffc30c;
+}
+
 .article__h2 {
   color: #1F1F3D;
   margin: 15px 15px 15px 15px;
@@ -200,6 +205,11 @@ hr {
   font-size: 1.25em;
   margin:  1rem 0;
   padding-right: 20px;
+}
+
+.italic {
+  color: #587A8A;
+  font-style: italic;
 }
 
 .article__section2 {

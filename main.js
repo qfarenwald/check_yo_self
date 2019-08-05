@@ -13,8 +13,6 @@ var deleteItemBtn = document.querySelector('.article__section--img1');
 var clearAllBtn = document.querySelector('#ClearAllBtn');
 var taskItemHeading = document.querySelector('#TaskItemHeading');
 
-
-
 aside.addEventListener('click', asideHandlerClick);
 main.addEventListener('click', mainHandler);
 aside.addEventListener('keyup', asideHandlerKeyup);
@@ -66,6 +64,10 @@ function mainHandler(e) {
 
   if(e.target.closest('.article__section--img1')) {
     toggleCheck(e);
+  }
+
+  if(e.target.closest('.article__section--img2')) {
+    toggleUrgent(e);
   }
 }
 
@@ -159,11 +161,31 @@ function makeNewList(e) {
   clearFormInputs();
 }
 
+function createObjectOfItems(list) {
+  for(var i = 0; i < tasksArray.length; i++) {
+    list.tasks.push({check: false, item: tasksArray[i].task, id: tasksArray[i].id});
+  }
+}
+
 function clearFormInputs() {
   taskTitle.value = "";
   taskItem.value = "";
   tasksArray = [];
   taskItemList.innerHTML = "";
+}
+
+function listMessage() {
+  if (listsArray.length === 0) {
+    paragraph.classList.remove('hidden');
+  } else if (listsArray.length !== 0) {
+    paragraph.classList.add('hidden');
+  }
+}
+
+function getCheckBoxImage(listTask) {
+  var img = null;
+  listTask ? img = "checkbox-active.svg" : img = "checkbox.svg";
+  return img;
 }
 
 function toggleCheck(e) {
@@ -176,24 +198,50 @@ function toggleCheck(e) {
   var checkImg = e.target.closest('.article__section--img1');
   var active = "images/checkbox-active.svg";
   var inactive = "images/checkbox.svg";
+  var cardText = e.target.parentNode.childNodes[3];
   for(var i = 0; i < cardObject.tasks.length; i++) {
     if(cardObject.tasks[i].id === taskId) {
       if(cardObject.tasks[i].check === false) {
         cardObject.tasks[i].check = true;
         checkImg.src = active;
-        listsArray[cardIndex].updateTask(listsArray);
+        cardText.classList.add('italic');
+        listsArray[cardIndex].updateToDo(listsArray);
       } else {
         cardObject.tasks[i].check = false;
         checkImg.src = inactive;
-        listsArray[cardIndex].updateTask(listsArray);
+        cardText.classList.remove('italic');
+        listsArray[cardIndex].updateToDo(listsArray);
       }
     }
   }
 }
 
-function createObjectOfItems(list) {
-  for(var i = 0; i < tasksArray.length; i++) {
-    list.tasks.push({check: false, item: tasksArray[i].task, id: tasksArray[i].id});
+function getUrgentImage(listTask) {
+  var urgentImg = null;
+  listTask ? urgentImg = "urgent-active.svg" : urgentImg = "urgent.svg";
+  return urgentImg;
+}
+
+function toggleUrgent(e) {
+  var cardId = findId(e);
+  var cardIndex = findIndex(e);
+  var cardObject = listsArray.find(function(list) {
+    return list.id === cardId;
+  });
+  var urgentImg = e.target.closest('.article__section--img2');
+  var active = "images/urgent-active.svg";
+  var inactive = "images/urgent.svg";
+  var cardBkgd = e.target.parentNode.parentNode.parentNode;
+  if(cardObject.urgent === false) {
+    cardObject.urgent = true;
+    urgentImg.src = active;
+    cardBkgd.classList.add('main__article--urgent');
+    listsArray[cardIndex].updateTask(listsArray);
+  } else {
+    cardObject.urgent = false;
+    urgentImg.src = inactive;
+    cardBkgd.classList.remove('main__article--urgent');
+    listsArray[cardIndex].updateTask(listsArray);
   }
 }
 
@@ -208,49 +256,39 @@ function generateTaskItems({list}) {
 }
 
 function returnTaskElements(list) {
+  var italic = "";
   var codeBlock = "";
   for(var i = 0; i < list.tasks.length; i++){
+  list.tasks[i].check ?  italic = "italic" : italic = "";
   codeBlock += `<section class="article__section1">
   <img class="article__section--img1" src="images/${getCheckBoxImage(list.tasks[i].check)}" alt="circle checkbox button">
-    <p class="article__section--p" data-id=${list.tasks[i].id}>${list.tasks[i].item}</p>
+    <p class="article__section--p ${italic}" data-id=${list.tasks[i].id}>${list.tasks[i].item}</p>
     </section>`;
   }
   return codeBlock;
 }
 
-function getCheckBoxImage(listTask) {
-  var img = null;
-  listTask ? img = "checkbox-active.svg" : img = "checkbox.svg";
-  return img;
-}
-
 function generateTaskCard(list) {
+  var bkgdColor = "";
+  list.urgent ?  bkgdColor = "main__article--urgent" : bkgdColor = "";
   main.insertAdjacentHTML ('afterbegin',
- `<article class="main__article" data-id=${list.id}>
+ `<article class="main__article ${bkgdColor}" data-id=${list.id}>
    <h2 class="article__h2">${list.title}</h2>
    <hr>
    ${returnTaskElements(list)}
    <hr>
    <section class="article__section2">
      <div class="article__section2--container">
-       <img class="article__section--img2" src="images/urgent.svg" alt="white colored unactivated lightning bolt image">
+       <img class="article__section--img2" src="images/${getUrgentImage(list.urgent)}" alt="lightning bolt image">
        <h4 class="article__section--h4">URGENT</h4>
      </div>
      <div class="article__section2--container">
-       <img class="article__section--img3" src="images/delete.svg" alt="white colored unactivated x image">
+       <img class="article__section--img3" src="images/delete.svg" alt="circle with an x in the middle image">
        <h4 class="article__section--h4">DELETE</h4>
      </div>
    </section>
  </article>`)
  listMessage();
-}
-
-function listMessage() {
-  if (listsArray.length === 0) {
-    paragraph.classList.remove('hidden');
-  } else if (listsArray.length !== 0) {
-    paragraph.classList.add('hidden');
-  }
 }
 
 function getLists() {
