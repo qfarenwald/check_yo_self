@@ -202,6 +202,11 @@ hr {
   padding-right: 20px;
 }
 
+.italic {
+  color: #587A8A;
+  font-style: italic;
+}
+
 .article__section2 {
   display: flex;
   justify-content: space-between;

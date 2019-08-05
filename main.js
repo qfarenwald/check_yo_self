@@ -176,15 +176,18 @@ function toggleCheck(e) {
   var checkImg = e.target.closest('.article__section--img1');
   var active = "images/checkbox-active.svg";
   var inactive = "images/checkbox.svg";
+  var cardText = e.target.parentNode.childNodes[3];
   for(var i = 0; i < cardObject.tasks.length; i++) {
     if(cardObject.tasks[i].id === taskId) {
       if(cardObject.tasks[i].check === false) {
         cardObject.tasks[i].check = true;
         checkImg.src = active;
+        cardText.classList.add('italic');
         listsArray[cardIndex].updateTask(listsArray);
       } else {
         cardObject.tasks[i].check = false;
         checkImg.src = inactive;
+        cardText.classList.remove('italic');
         listsArray[cardIndex].updateTask(listsArray);
       }
     }
@@ -208,11 +211,13 @@ function generateTaskItems({list}) {
 }
 
 function returnTaskElements(list) {
+  var italic = "";
   var codeBlock = "";
   for(var i = 0; i < list.tasks.length; i++){
+  list.tasks[i].check ?  italic = "italic" : italic = "";
   codeBlock += `<section class="article__section1">
   <img class="article__section--img1" src="images/${getCheckBoxImage(list.tasks[i].check)}" alt="circle checkbox button">
-    <p class="article__section--p" data-id=${list.tasks[i].id}>${list.tasks[i].item}</p>
+    <p class="article__section--p ${italic}" data-id=${list.tasks[i].id}>${list.tasks[i].item}</p>
     </section>`;
   }
   return codeBlock;
