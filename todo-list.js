@@ -18,4 +18,8 @@ class ToDoList {
   updateTask(listsArray) {
     this.saveToStorage(listsArray);
   }
+
+  updateToDo(listsArray) {
+    this.saveToStorage(listsArray);
+  }
 }

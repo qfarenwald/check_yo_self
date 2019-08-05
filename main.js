@@ -205,12 +205,12 @@ function toggleCheck(e) {
         cardObject.tasks[i].check = true;
         checkImg.src = active;
         cardText.classList.add('italic');
-        listsArray[cardIndex].updateTask(listsArray);
+        listsArray[cardIndex].updateToDo(listsArray);
       } else {
         cardObject.tasks[i].check = false;
         checkImg.src = inactive;
         cardText.classList.remove('italic');
-        listsArray[cardIndex].updateTask(listsArray);
+        listsArray[cardIndex].updateToDo(listsArray);
       }
     }
   }
@@ -231,13 +231,16 @@ function toggleUrgent(e) {
   var urgentImg = e.target.closest('.article__section--img2');
   var active = "images/urgent-active.svg";
   var inactive = "images/urgent.svg";
+  var cardBkgd = e.target.parentNode.parentNode.parentNode;
   if(cardObject.urgent === false) {
     cardObject.urgent = true;
     urgentImg.src = active;
+    cardBkgd.classList.add('main__article--urgent');
     listsArray[cardIndex].updateTask(listsArray);
   } else {
     cardObject.urgent = false;
     urgentImg.src = inactive;
+    cardBkgd.classList.remove('main__article--urgent');
     listsArray[cardIndex].updateTask(listsArray);
   }
 }
@@ -266,8 +269,10 @@ function returnTaskElements(list) {
 }
 
 function generateTaskCard(list) {
+  var bkgdColor = "";
+  list.urgent ?  bkgdColor = "main__article--urgent" : bkgdColor = "";
   main.insertAdjacentHTML ('afterbegin',
- `<article class="main__article" data-id=${list.id}>
+ `<article class="main__article ${bkgdColor}" data-id=${list.id}>
    <h2 class="article__h2">${list.title}</h2>
    <hr>
    ${returnTaskElements(list)}
