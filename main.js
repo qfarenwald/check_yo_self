@@ -137,16 +137,28 @@ function deleteList(e) {
   }
 }
 
+//refactor
 function deleteItem(e) {
   var target = findIdOfItem(e);
   var filter = tasksArray.filter(function(obj) {
     return obj.id !== target;
   });
   tasksArray = filter;
-  var list = new ToDoList(Date.now(), taskTitle.value);
-  list.saveToStorage(listsArray);
   e.target.closest('.article__section1').remove();
 }
+//refactor
+
+//original
+// function deleteItem(e) {
+//   var target = findIdOfItem(e);
+//   var filter = tasksArray.filter(function(obj) {
+//     return obj.id !== target;
+//   });
+//   tasksArray = filter;
+//   var list = new ToDoList(Date.now(), taskTitle.value);
+//   list.saveToStorage(listsArray);
+//   e.target.closest('.article__section1').remove();
+// }
 
 function makeNewList(e) {
   e.preventDefault();
@@ -188,6 +200,36 @@ function getCheckBoxImage(listTask) {
   return img;
 }
 
+//refactor to switch statement and forEach
+// function toggleCheck(e) {
+//   var cardId = findId(e);
+//   var cardIndex = findIndex(e);
+//   var taskId = findIdOfItem(e);
+//   var checkImg = e.target.closest('.article__section--img1');
+//   var cardText = e.target.parentNode.childNodes[3];
+//   var cardObject = listsArray.find(function(list) {
+//     return list.id === cardId;
+//   });
+//   cardObject.tasks.forEach(function(element) {
+//     switch (element.id === taskId) {
+//       case element.check === false:
+//         element.check = true;
+//         checkImg.src = "images/checkbox-active.svg";
+//         cardText.classList.add('italic');
+//         listsArray[cardIndex].updateToDo(listsArray);
+//       break;
+//       case element.check === true:
+//         element.check = false;
+//         checkImg.src = "images/checkbox.svg";
+//         cardText.classList.remove('italic');
+//         listsArray[cardIndex].updateToDo(listsArray);
+//       break;
+//       }
+//     })
+//   }
+//refactor
+
+//original
 function toggleCheck(e) {
   var cardId = findId(e);
   var cardIndex = findIndex(e);
@@ -196,19 +238,17 @@ function toggleCheck(e) {
   });
   var taskId = findIdOfItem(e);
   var checkImg = e.target.closest('.article__section--img1');
-  var active = "images/checkbox-active.svg";
-  var inactive = "images/checkbox.svg";
   var cardText = e.target.parentNode.childNodes[3];
   for (var i = 0; i < cardObject.tasks.length; i++) {
     if (cardObject.tasks[i].id === taskId) {
       if (cardObject.tasks[i].check === false) {
         cardObject.tasks[i].check = true;
-        checkImg.src = active;
+        checkImg.src = "images/checkbox-active.svg";
         cardText.classList.add('italic');
         listsArray[cardIndex].updateToDo(listsArray);
       } else {
         cardObject.tasks[i].check = false;
-        checkImg.src = inactive;
+        checkImg.src = "images/checkbox.svg";
         cardText.classList.remove('italic');
         listsArray[cardIndex].updateToDo(listsArray);
       }
@@ -229,17 +269,15 @@ function toggleUrgent(e) {
     return list.id === cardId;
   });
   var urgentImg = e.target.closest('.article__section--img2');
-  var active = "images/urgent-active.svg";
-  var inactive = "images/urgent.svg";
   var cardBkgd = e.target.parentNode.parentNode.parentNode;
   if (cardObject.urgent === false) {
     cardObject.urgent = true;
-    urgentImg.src = active;
+    urgentImg.src = "images/urgent-active.svg";
     cardBkgd.classList.add('main__article--urgent');
     listsArray[cardIndex].updateTask(listsArray);
   } else {
     cardObject.urgent = false;
-    urgentImg.src = inactive;
+    urgentImg.src = "images/urgent.svg";
     cardBkgd.classList.remove('main__article--urgent');
     listsArray[cardIndex].updateTask(listsArray);
   }
@@ -293,6 +331,7 @@ function generateTaskCard(list) {
 
 function getLists() {
   if (JSON.parse(localStorage.getItem('theLists')) === null) {
+    return listsArray;
   } else {
     listsArray = JSON.parse(localStorage.getItem('theLists')).map(function(obj) {
       return new ToDoList(obj.id, obj.title, obj.tasks, obj.urgent);
