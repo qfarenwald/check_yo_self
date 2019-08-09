@@ -1,31 +1,33 @@
 // start of jQuery ready, dont forget brackets at bottom
-// $( document ).ready(function() {
+$( document ).ready(function() {
 
 // jQuery selections
-// var aside = $(".aside");
-// var main = $(".main");
-// var taskTitle = $(".aside__input--title");
-// var taskItem = $(".aside__input--item");
-// var taskItemList = $(".aside__itemlist--container");
+const aside = $(".aside");
+const main = $(".main");
+const taskTitle = $(".aside__input--title");
+const taskItem = $(".aside__input--item");
+const taskItemList = $(".aside__itemlist--container");
 
 // jQuery event handlers
-// aside.on("click", asideHandlerClick);
-// main.on("click", mainHandler);
-// aside.on("keyup", asideHandlerKeyup);
-// $(window).on("load", loadHandler)
+aside.on("click", asideHandlerClick);
+main.on("click", mainHandler);
+aside.on("keyup", asideHandlerKeyup);
+$(window).on("load", loadHandler)
 
 let listsArray = [];
 let tasksArray = [];
-const aside = document.querySelector('.aside');
-const main = document.querySelector('.main');
-const taskTitle = document.querySelector('.aside__input--title');
-const taskItem = document.querySelector('.aside__input--item');
-const taskItemList = document.querySelector('.aside__itemlist--container');
 
-aside.addEventListener('click', asideHandlerClick);
-main.addEventListener('click', mainHandler);
-aside.addEventListener('keyup', asideHandlerKeyup);
-window.addEventListener('load', loadHandler)
+// original
+// const aside = document.querySelector('.aside');
+// const main = document.querySelector('.main');
+// const taskTitle = document.querySelector('.aside__input--title');
+// const taskItem = document.querySelector('.aside__input--item');
+// const taskItemList = document.querySelector('.aside__itemlist--container');
+//
+// aside.addEventListener('click', asideHandlerClick);
+// main.addEventListener('click', mainHandler);
+// aside.addEventListener('keyup', asideHandlerKeyup);
+// window.addEventListener('load', loadHandler)
 
 function loadHandler() {
   getLists();
@@ -49,7 +51,7 @@ function asideHandlerClick(e) {
 
   if (e.target.closest('.aside__img')) {
     generateTaskItems(e);
-    taskItem.value = "";
+    taskItem[0].value = "";
     enableAddItemBtn(e);
     enableMakeTaskListBtn(e);
     enableClearAllBtn(e);
@@ -82,20 +84,20 @@ function mainHandler(e) {
 
 function enableClearAllBtn(e) {
   e.preventDefault;
-  const clearAllBtn = document.querySelector('#ClearAllBtn');
-  taskTitle.value !== "" && tasksArray.length > 0 ? clearAllBtn.disabled = false : clearAllBtn.disabled = true;
+  const clearAllBtn = $("#ClearAllBtn");
+  taskTitle[0].value !== "" && tasksArray.length > 0 ? clearAllBtn[0].disabled = false : clearAllBtn[0].disabled = true;
 }
 
 function enableMakeTaskListBtn(e) {
   e.preventDefault;
-  const makeTaskListBtn = document.querySelector('.aside__btn');
-  taskTitle.value !== "" && tasksArray.length > 0 ? makeTaskListBtn.disabled = false : makeTaskListBtn.disabled = true
+  const makeTaskListBtn = $(".aside__btn");
+  taskTitle[0].value !== "" && tasksArray.length > 0 ? makeTaskListBtn[0].disabled = false : makeTaskListBtn[0].disabled = true
 }
 
 function enableAddItemBtn(e) {
   e.preventDefault;
-  const addTaskBtn = document.querySelector('.aside__img');
-  taskItem.value !== "" ? addTaskBtn.disabled = false : addTaskBtn.disabled = true
+  const addTaskBtn = $(".aside__img");
+  taskItem[0].value !== "" ? addTaskBtn[0].disabled = false : addTaskBtn[0].disabled = true
 }
 
 function findId() {
@@ -150,7 +152,7 @@ function deleteItem(e) {
 
 function makeNewList(e) {
   e.preventDefault();
-  let list = new ToDoList(Date.now(), taskTitle.value);
+  let list = new ToDoList(Date.now(), taskTitle[0].value);
   listsArray.push(list);
   createObjectOfItems(list);
   generateTaskCard(list);
@@ -159,7 +161,6 @@ function makeNewList(e) {
 }
 
 function createObjectOfItems(list) {
-  console.log('hello')
   tasksArray.forEach(function(element) {
     list.tasks.push({
       check: false,
@@ -169,15 +170,15 @@ function createObjectOfItems(list) {
 }
 
 function clearFormInputs() {
-  taskTitle.value = "";
-  taskItem.value = "";
+  taskTitle[0].value = "";
+  taskItem[0].value = "";
   tasksArray = [];
-  taskItemList.innerHTML = "";
+  taskItemList[0].innerHTML = "";
 }
 
 function listMessage() {
-  const paragraph = document.querySelector('.main__paragraph');
-  listsArray.length === 0 ? paragraph.classList.remove('hidden') : paragraph.classList.add('hidden')
+  const paragraph = $(".main__paragraph");
+  listsArray.length === 0 ? paragraph.removeClass("hidden") : paragraph.addClass("hidden")
 }
 
 // function getCheckBoxImage(listTask) {
@@ -291,12 +292,12 @@ function toggleUrgent(e) {
 
 function generateTaskItems() {
   let dateId = Date.now();
-  taskItemList.insertAdjacentHTML ('beforeend',
+  document.querySelector('.aside__itemlist--container').insertAdjacentHTML ('beforeend',
     `<section class="article__section1">
     <img class="article__section--img1" src="images/delete.svg" alt="circle delete button">
-    <p class="article__section--p" data-id=${dateId}>${taskItem.value}</p>
+    <p class="article__section--p" data-id=${dateId}>${taskItem[0].value}</p>
     </section>`)
-  tasksArray.push({task: taskItem.value, id: dateId});
+  tasksArray.push({task: taskItem[0].value, id: dateId});
 }
 
 function returnTaskElements(list) {
@@ -319,7 +320,7 @@ function generateTaskCard(list) {
   let bkgdColor = "";
   list.urgent ?  bkgdColor = "main__article--urgent" : bkgdColor = "";
   list.urgent ?  urgentImg = "urgent-active.svg" : urgentImg = "urgent.svg";
-  main.insertAdjacentHTML ('afterbegin',
+  document.querySelector('.main').insertAdjacentHTML ('afterbegin',
     `<article class="main__article ${bkgdColor}" data-id=${list.id}>
     <h2 class="article__h2">${list.title}</h2>
     <hr>
@@ -352,4 +353,4 @@ function reDisplayCards() {
 }
 
 // end of jQuery ready
-// });
+});
