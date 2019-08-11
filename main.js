@@ -1,31 +1,18 @@
-// start of jQuery ready, dont forget brackets at bottom
-// $( document ).ready(function() {
+$( document ).ready(function() {
 
-// jQuery selections
-// var aside = $(".aside");
-// var main = $(".main");
-// var taskTitle = $(".aside__input--title");
-// var taskItem = $(".aside__input--item");
-// var taskItemList = $(".aside__itemlist--container");
+const aside = $(".aside");
+const main = $(".main");
+const taskTitle = $(".aside__input--title");
+const taskItem = $(".aside__input--item");
+const taskItemList = $(".aside__itemlist--container");
 
-// jQuery event handlers
-// aside.on("click", asideHandlerClick);
-// main.on("click", mainHandler);
-// aside.on("keyup", asideHandlerKeyup);
-// $(window).on("load", loadHandler)
+aside.on("click", asideHandlerClick);
+main.on("click", mainHandler);
+aside.on("keyup", asideHandlerKeyup);
+$(window).on("load", loadHandler)
 
 let listsArray = [];
 let tasksArray = [];
-const aside = document.querySelector('.aside');
-const main = document.querySelector('.main');
-const taskTitle = document.querySelector('.aside__input--title');
-const taskItem = document.querySelector('.aside__input--item');
-const taskItemList = document.querySelector('.aside__itemlist--container');
-
-aside.addEventListener('click', asideHandlerClick);
-main.addEventListener('click', mainHandler);
-aside.addEventListener('keyup', asideHandlerKeyup);
-window.addEventListener('load', loadHandler)
 
 function loadHandler() {
   getLists();
@@ -49,7 +36,7 @@ function asideHandlerClick(e) {
 
   if (e.target.closest('.aside__img')) {
     generateTaskItems(e);
-    taskItem.value = "";
+    taskItem[0].value = "";
     enableAddItemBtn(e);
     enableMakeTaskListBtn(e);
     enableClearAllBtn(e);
@@ -80,48 +67,48 @@ function mainHandler(e) {
   }
 }
 
-function enableClearAllBtn(e) {
+enableClearAllBtn = e => {
   e.preventDefault;
-  const clearAllBtn = document.querySelector('#ClearAllBtn');
-  taskTitle.value !== "" && tasksArray.length > 0 ? clearAllBtn.disabled = false : clearAllBtn.disabled = true;
+  const clearAllBtn = $("#ClearAllBtn");
+  taskTitle[0].value !== "" && tasksArray.length > 0 ? clearAllBtn[0].disabled = false : clearAllBtn[0].disabled = true;
 }
 
-function enableMakeTaskListBtn(e) {
+enableMakeTaskListBtn = e => {
   e.preventDefault;
-  const makeTaskListBtn = document.querySelector('.aside__btn');
-  taskTitle.value !== "" && tasksArray.length > 0 ? makeTaskListBtn.disabled = false : makeTaskListBtn.disabled = true
+  const makeTaskListBtn = $(".aside__btn");
+  taskTitle[0].value !== "" && tasksArray.length > 0 ? makeTaskListBtn[0].disabled = false : makeTaskListBtn[0].disabled = true
 }
 
-function enableAddItemBtn(e) {
+enableAddItemBtn = e => {
   e.preventDefault;
-  const addTaskBtn = document.querySelector('.aside__img');
-  taskItem.value !== "" ? addTaskBtn.disabled = false : addTaskBtn.disabled = true
+  const addTaskBtn = $(".aside__img");
+  taskItem[0].value !== "" ? addTaskBtn[0].disabled = false : addTaskBtn[0].disabled = true
 }
 
-function findId() {
-  const card = event.target.closest('.main__article');
+findId = e => {
+  const card = e.target.closest('.main__article');
   if (listsArray.length > 0 && card) {
-    return parseInt(event.target.closest('.main__article').dataset.id);
+    return parseInt(e.target.closest('.main__article').dataset.id);
   }
 }
 
-function findIdOfItem(e) {
+findIdOfItem = e => {
   return parseInt(e.target.parentNode.childNodes[3].attributes[1].nodeValue);
 }
 
-function findIndex(e) {
+findIndex = e => {
   let id = findId(e);
-  let item = listsArray.find(function(element) {
+  let item = listsArray.find(element => {
     return element.id === id;
   })
   return listsArray.indexOf(item);
 }
 
-function countTrue(e) {
+countTrue = e => {
   let cardIndex = findIndex(e);
   let newTaskArray = listsArray[cardIndex].tasks;
   let count = 0;
-  newTaskArray.forEach(function(element) {
+  newTaskArray.forEach(element => {
     if (element.check === true) {
       ++count;
     }
@@ -129,7 +116,7 @@ function countTrue(e) {
   return count === newTaskArray.length ? true : false;
 }
 
-function deleteList(e) {
+deleteList = e => {
   let cardIndex = findIndex(e);
   let trueCount = countTrue(e);
   if (trueCount === true) {
@@ -139,18 +126,18 @@ function deleteList(e) {
   }
 }
 
-function deleteItem(e) {
+deleteItem = e => {
   let target = findIdOfItem(e);
-  let filter = tasksArray.filter(function(obj) {
+  let filter = tasksArray.filter(obj => {
     return obj.id !== target;
   });
   tasksArray = filter;
   e.target.closest('.article__section1').remove();
 }
 
-function makeNewList(e) {
+makeNewList = e => {
   e.preventDefault();
-  let list = new ToDoList(Date.now(), taskTitle.value);
+  let list = new ToDoList(Date.now(), taskTitle[0].value);
   listsArray.push(list);
   createObjectOfItems(list);
   generateTaskCard(list);
@@ -158,9 +145,8 @@ function makeNewList(e) {
   clearFormInputs();
 }
 
-function createObjectOfItems(list) {
-  console.log('hello')
-  tasksArray.forEach(function(element) {
+createObjectOfItems = list => {
+  tasksArray.forEach(element => {
     list.tasks.push({
       check: false,
       item: element.task,
@@ -168,24 +154,26 @@ function createObjectOfItems(list) {
   })
 }
 
-function clearFormInputs() {
-  taskTitle.value = "";
-  taskItem.value = "";
+clearFormInputs = () => {
+  taskTitle[0].value = "";
+  taskItem[0].value = "";
   tasksArray = [];
-  taskItemList.innerHTML = "";
+  taskItemList[0].innerHTML = "";
 }
 
-function listMessage() {
-  const paragraph = document.querySelector('.main__paragraph');
-  listsArray.length === 0 ? paragraph.classList.remove('hidden') : paragraph.classList.add('hidden')
+listMessage = () => {
+  const paragraph = $(".main__paragraph");
+  listsArray.length === 0 ? paragraph.removeClass("hidden") : paragraph.addClass("hidden")
 }
 
+// built this into function... good idea?
 // function getCheckBoxImage(listTask) {
 //   var img = null;
 //   listTask ? img = "checkbox-active.svg" : img = "checkbox.svg";
 //   return img;
 // }
 
+// built this into function... good idea?
 // function getUrgentImage(listTask) {
 //   var urgentImg = null;
 //   listTask ? urgentImg = "urgent-active.svg" : urgentImg = "urgent.svg";
@@ -202,78 +190,61 @@ function listMessage() {
 //   var cardObject = listsArray.find(function(element) {
 //     return element.id === cardId;
 //   });
-//   cardObject.tasks.forEach(function(element) {
+//   cardObject.tasks.forEach(element => {
 //     switch (element.id === taskId) {
-//       case element.check === false:
+//       case element.check === false: {
 //         element.check = true;
 //         checkImg.src = "images/checkbox-active.svg";
 //         cardText.classList.add('italic');
 //         listsArray[cardIndex].updateToDo(listsArray);
-//       break;
-//       case element.check === true:
+//         break;
+//     }
+//       default: {
 //         element.check = false;
 //         checkImg.src = "images/checkbox.svg";
 //         cardText.classList.remove('italic');
 //         listsArray[cardIndex].updateToDo(listsArray);
-//       break;
+//         break;
+//         }
 //       }
 //     })
 //   }
 //refactor
 
-// refactor 2 NOT YET WORKING
-// function toggleCheck(e) {
-//   var cardId = findId(e);
-//   var cardIndex = findIndex(e);
-//   var cardObject = listsArray.find(function(list) {
-//     return list.id === cardId;
-//   });
-//   var taskId = findIdOfItem(e);
-//   var checkImg = e.target.closest('.article__section--img1');
-//   var cardText = e.target.parentNode.childNodes[3];
-//   cardObject.tasks.forEach(function(element) {
-//     if (element.id === taskId) {
-//       element.check === false ? element.check = true : element.check = false;
-//       listsArray[cardIndex].updateToDo(listsArray);
-//       }
-//     })
-//   }
-// refactor
-
 // original
-function toggleCheck(e) {
+toggleCheck = e => {
   let cardId = findId(e);
   let cardIndex = findIndex(e);
-  let cardObject = listsArray.find(function(list) {
+  let cardObject = listsArray.find(list => {
     return list.id === cardId;
   });
   let taskId = findIdOfItem(e);
   let checkImg = e.target.closest('.article__section--img1');
   let cardText = e.target.parentNode.childNodes[3];
-  for (var i = 0; i < cardObject.tasks.length; i++) {
-    if (cardObject.tasks[i].id === taskId) {
-      if (cardObject.tasks[i].check === false) {
-        cardObject.tasks[i].check = true;
+  cardObject.tasks.forEach(element => {
+    if (element.id === taskId) {
+      if (element.check === false) {
+        element.check = true;
         checkImg.src = "images/checkbox-active.svg";
         cardText.classList.add('italic');
         listsArray[cardIndex].updateToDo(listsArray);
       } else {
-        cardObject.tasks[i].check = false;
+        element.check = false;
         checkImg.src = "images/checkbox.svg";
         cardText.classList.remove('italic');
         listsArray[cardIndex].updateToDo(listsArray);
       }
     }
-  }
+  })
 }
 
-// needs refactoring
-function toggleUrgent(e) {
+// needs refactoring once toggleCheck is done
+toggleUrgent = e => {
   let cardId = findId(e);
   let cardIndex = findIndex(e);
   let urgentImg = e.target.closest('.article__section--img2');
   let cardBkgd = e.target.parentNode.parentNode.parentNode;
-  let cardObject = listsArray.find(function(list) {
+  let cardObject = listsArray.find(list => {
     return list.id === cardId;
   });
   if (cardObject.urgent === false) {
@@ -289,21 +260,21 @@ function toggleUrgent(e) {
   }
 }
 
-function generateTaskItems() {
+generateTaskItems = () => {
   let dateId = Date.now();
-  taskItemList.insertAdjacentHTML ('beforeend',
+  document.querySelector('.aside__itemlist--container').insertAdjacentHTML ('beforeend',
     `<section class="article__section1">
     <img class="article__section--img1" src="images/delete.svg" alt="circle delete button">
-    <p class="article__section--p" data-id=${dateId}>${taskItem.value}</p>
+    <p class="article__section--p" data-id=${dateId}>${taskItem[0].value}</p>
     </section>`)
-  tasksArray.push({task: taskItem.value, id: dateId});
+  tasksArray.push({task: taskItem[0].value, id: dateId});
 }
 
-function returnTaskElements(list) {
+returnTaskElements = list => {
   let italic = "";
   let img = "";
   let codeBlock = "";
-  list.tasks.forEach(function(element) {
+  list.tasks.forEach(element => {
     element.check ?  italic = "italic" : italic = "";
     element.check ?  img = "checkbox-active.svg" : img = "checkbox.svg";
     codeBlock += `<section class="article__section1">
@@ -314,12 +285,12 @@ function returnTaskElements(list) {
   return codeBlock;
 }
 
-function generateTaskCard(list) {
+generateTaskCard = list => {
   let urgentImg = "";
   let bkgdColor = "";
   list.urgent ?  bkgdColor = "main__article--urgent" : bkgdColor = "";
   list.urgent ?  urgentImg = "urgent-active.svg" : urgentImg = "urgent.svg";
-  main.insertAdjacentHTML ('afterbegin',
+  document.querySelector('.main').insertAdjacentHTML ('afterbegin',
     `<article class="main__article ${bkgdColor}" data-id=${list.id}>
     <h2 class="article__h2">${list.title}</h2>
     <hr>
@@ -339,17 +310,16 @@ function generateTaskCard(list) {
   listMessage();
 }
 
-function getLists() {
-  JSON.parse(localStorage.getItem('theLists')) === null ? listsArray : listsArray = JSON.parse(localStorage.getItem('theLists')).map(function(obj) {
+getLists = () => {
+  JSON.parse(localStorage.getItem('theLists')) === null ? listsArray : listsArray = JSON.parse(localStorage.getItem('theLists')).map(obj => {
       return new ToDoList(obj.id, obj.title, obj.tasks, obj.urgent);
     });
 }
 
-function reDisplayCards() {
-  listsArray.forEach(function(element) {
+reDisplayCards = () => {
+  listsArray.forEach(element => {
     generateTaskCard(element);
   })
 }
 
-// end of jQuery ready
-// });
+});
