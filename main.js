@@ -1,14 +1,26 @@
-var listsArray = [];
-var tasksArray = [];
-var aside = document.querySelector('.aside');
-var main = document.querySelector('.main');
-var makeTaskListBtn = document.querySelector('.aside__btn');
-var addTaskBtn = document.querySelector('.aside__img');
-var paragraph = document.querySelector('.main__paragraph');
-var taskTitle = document.querySelector('.aside__input--title');
-var taskItem = document.querySelector('.aside__input--item');
-var taskItemList = document.querySelector('.aside__itemlist--container');
-var clearAllBtn = document.querySelector('#ClearAllBtn');
+// start of jQuery ready, dont forget brackets at bottom
+// $( document ).ready(function() {
+
+// jQuery selections
+// var aside = $(".aside");
+// var main = $(".main");
+// var taskTitle = $(".aside__input--title");
+// var taskItem = $(".aside__input--item");
+// var taskItemList = $(".aside__itemlist--container");
+
+// jQuery event handlers
+// aside.on("click", asideHandlerClick);
+// main.on("click", mainHandler);
+// aside.on("keyup", asideHandlerKeyup);
+// $(window).on("load", loadHandler)
+
+let listsArray = [];
+let tasksArray = [];
+const aside = document.querySelector('.aside');
+const main = document.querySelector('.main');
+const taskTitle = document.querySelector('.aside__input--title');
+const taskItem = document.querySelector('.aside__input--item');
+const taskItemList = document.querySelector('.aside__itemlist--container');
 
 aside.addEventListener('click', asideHandlerClick);
 main.addEventListener('click', mainHandler);
@@ -70,33 +82,24 @@ function mainHandler(e) {
 
 function enableClearAllBtn(e) {
   e.preventDefault;
-  if (taskTitle.value !== "" && tasksArray.length > 0) {
-    clearAllBtn.disabled = false;
-  } else {
-    clearAllBtn.disabled = true;
-  }
+  const clearAllBtn = document.querySelector('#ClearAllBtn');
+  taskTitle.value !== "" && tasksArray.length > 0 ? clearAllBtn.disabled = false : clearAllBtn.disabled = true;
 }
 
 function enableMakeTaskListBtn(e) {
   e.preventDefault;
-  if (taskTitle.value !== "" && tasksArray.length > 0) {
-    makeTaskListBtn.disabled = false;
-  } else {
-    makeTaskListBtn.disabled = true;
-  }
+  const makeTaskListBtn = document.querySelector('.aside__btn');
+  taskTitle.value !== "" && tasksArray.length > 0 ? makeTaskListBtn.disabled = false : makeTaskListBtn.disabled = true
 }
 
 function enableAddItemBtn(e) {
   e.preventDefault;
-  if (taskItem.value !== "") {
-    addTaskBtn.disabled = false;
-  } else {
-    addTaskBtn.disabled = true;
-  }
+  const addTaskBtn = document.querySelector('.aside__img');
+  taskItem.value !== "" ? addTaskBtn.disabled = false : addTaskBtn.disabled = true
 }
 
 function findId() {
-  var card = event.target.closest('.main__article');
+  const card = event.target.closest('.main__article');
   if (listsArray.length > 0 && card) {
     return parseInt(event.target.closest('.main__article').dataset.id);
   }
@@ -107,29 +110,28 @@ function findIdOfItem(e) {
 }
 
 function findIndex(e) {
-  var id = findId(e);
-  for (var i = 0; i < listsArray.length; i++) {
-    if (id === listsArray[i].id) {
-      return parseInt(i);
-    }
-  }
+  let id = findId(e);
+  let item = listsArray.find(function(element) {
+    return element.id === id;
+  })
+  return listsArray.indexOf(item);
 }
 
 function countTrue(e) {
-  var cardIndex = findIndex(e);
-  var newTaskArray = listsArray[cardIndex].tasks;
-  var count = 0;
-  for (var i = 0; i < newTaskArray.length; i++) {
-    if (newTaskArray[i].check === true) {
+  let cardIndex = findIndex(e);
+  let newTaskArray = listsArray[cardIndex].tasks;
+  let count = 0;
+  newTaskArray.forEach(function(element) {
+    if (element.check === true) {
       ++count;
     }
-  }
+  })
   return count === newTaskArray.length ? true : false;
 }
 
 function deleteList(e) {
-  var cardIndex = findIndex(e);
-  var trueCount = countTrue(e);
+  let cardIndex = findIndex(e);
+  let trueCount = countTrue(e);
   if (trueCount === true) {
     e.target.closest('article').remove();
     listsArray[cardIndex].deleteFromStorage(cardIndex, listsArray);
@@ -138,19 +140,17 @@ function deleteList(e) {
 }
 
 function deleteItem(e) {
-  var target = findIdOfItem(e);
-  var filter = tasksArray.filter(function(obj) {
+  let target = findIdOfItem(e);
+  let filter = tasksArray.filter(function(obj) {
     return obj.id !== target;
   });
   tasksArray = filter;
-  var list = new ToDoList(Date.now(), taskTitle.value);
-  list.saveToStorage(listsArray);
   e.target.closest('.article__section1').remove();
 }
 
 function makeNewList(e) {
   e.preventDefault();
-  var list = new ToDoList(Date.now(), taskTitle.value);
+  let list = new ToDoList(Date.now(), taskTitle.value);
   listsArray.push(list);
   createObjectOfItems(list);
   generateTaskCard(list);
@@ -159,12 +159,13 @@ function makeNewList(e) {
 }
 
 function createObjectOfItems(list) {
-  for (var i = 0; i < tasksArray.length; i++) {
+  console.log('hello')
+  tasksArray.forEach(function(element) {
     list.tasks.push({
       check: false,
-      item: tasksArray[i].task,
-      id: tasksArray[i].id});
-  }
+      item: element.task,
+      id: element.id});
+  })
 }
 
 function clearFormInputs() {
@@ -175,40 +176,90 @@ function clearFormInputs() {
 }
 
 function listMessage() {
-  if (listsArray.length === 0) {
-    paragraph.classList.remove('hidden');
-  } else if (listsArray.length !== 0) {
-    paragraph.classList.add('hidden');
-  }
+  const paragraph = document.querySelector('.main__paragraph');
+  listsArray.length === 0 ? paragraph.classList.remove('hidden') : paragraph.classList.add('hidden')
 }
 
-function getCheckBoxImage(listTask) {
-  var img = null;
-  listTask ? img = "checkbox-active.svg" : img = "checkbox.svg";
-  return img;
-}
+// function getCheckBoxImage(listTask) {
+//   var img = null;
+//   listTask ? img = "checkbox-active.svg" : img = "checkbox.svg";
+//   return img;
+// }
 
+// function getUrgentImage(listTask) {
+//   var urgentImg = null;
+//   listTask ? urgentImg = "urgent-active.svg" : urgentImg = "urgent.svg";
+//   return urgentImg;
+// }
+
+//refactor to switch statement and forEach NOT YET WORKING
+// function toggleCheck(e) {
+//   var cardId = findId(e);
+//   var cardIndex = findIndex(e);
+//   var taskId = findIdOfItem(e);
+//   var checkImg = e.target.closest('.article__section--img1');
+//   var cardText = e.target.parentNode.childNodes[3];
+//   var cardObject = listsArray.find(function(element) {
+//     return element.id === cardId;
+//   });
+//   cardObject.tasks.forEach(function(element) {
+//     switch (element.id === taskId) {
+//       case element.check === false:
+//         element.check = true;
+//         checkImg.src = "images/checkbox-active.svg";
+//         cardText.classList.add('italic');
+//         listsArray[cardIndex].updateToDo(listsArray);
+//       break;
+//       case element.check === true:
+//         element.check = false;
+//         checkImg.src = "images/checkbox.svg";
+//         cardText.classList.remove('italic');
+//         listsArray[cardIndex].updateToDo(listsArray);
+//       break;
+//       }
+//     })
+//   }
+//refactor
+
+// refactor 2 NOT YET WORKING
+// function toggleCheck(e) {
+//   var cardId = findId(e);
+//   var cardIndex = findIndex(e);
+//   var cardObject = listsArray.find(function(list) {
+//     return list.id === cardId;
+//   });
+//   var taskId = findIdOfItem(e);
+//   var checkImg = e.target.closest('.article__section--img1');
+//   var cardText = e.target.parentNode.childNodes[3];
+//   cardObject.tasks.forEach(function(element) {
+//     if (element.id === taskId) {
+//       element.check === false ? element.check = true : element.check = false;
+//       listsArray[cardIndex].updateToDo(listsArray);
+//       }
+//     })
+//   }
+// refactor
+
+// original
 function toggleCheck(e) {
-  var cardId = findId(e);
-  var cardIndex = findIndex(e);
-  var cardObject = listsArray.find(function(list) {
+  let cardId = findId(e);
+  let cardIndex = findIndex(e);
+  let cardObject = listsArray.find(function(list) {
     return list.id === cardId;
   });
-  var taskId = findIdOfItem(e);
-  var checkImg = e.target.closest('.article__section--img1');
-  var active = "images/checkbox-active.svg";
-  var inactive = "images/checkbox.svg";
-  var cardText = e.target.parentNode.childNodes[3];
+  let taskId = findIdOfItem(e);
+  let checkImg = e.target.closest('.article__section--img1');
+  let cardText = e.target.parentNode.childNodes[3];
   for (var i = 0; i < cardObject.tasks.length; i++) {
     if (cardObject.tasks[i].id === taskId) {
       if (cardObject.tasks[i].check === false) {
         cardObject.tasks[i].check = true;
-        checkImg.src = active;
+        checkImg.src = "images/checkbox-active.svg";
         cardText.classList.add('italic');
         listsArray[cardIndex].updateToDo(listsArray);
       } else {
         cardObject.tasks[i].check = false;
-        checkImg.src = inactive;
+        checkImg.src = "images/checkbox.svg";
         cardText.classList.remove('italic');
         listsArray[cardIndex].updateToDo(listsArray);
       }
@@ -216,37 +267,30 @@ function toggleCheck(e) {
   }
 }
 
-function getUrgentImage(listTask) {
-  var urgentImg = null;
-  listTask ? urgentImg = "urgent-active.svg" : urgentImg = "urgent.svg";
-  return urgentImg;
-}
-
+// needs refactoring
 function toggleUrgent(e) {
-  var cardId = findId(e);
-  var cardIndex = findIndex(e);
-  var cardObject = listsArray.find(function(list) {
+  let cardId = findId(e);
+  let cardIndex = findIndex(e);
+  let urgentImg = e.target.closest('.article__section--img2');
+  let cardBkgd = e.target.parentNode.parentNode.parentNode;
+  let cardObject = listsArray.find(function(list) {
     return list.id === cardId;
   });
-  var urgentImg = e.target.closest('.article__section--img2');
-  var active = "images/urgent-active.svg";
-  var inactive = "images/urgent.svg";
-  var cardBkgd = e.target.parentNode.parentNode.parentNode;
   if (cardObject.urgent === false) {
     cardObject.urgent = true;
-    urgentImg.src = active;
+    urgentImg.src = "images/urgent-active.svg";
     cardBkgd.classList.add('main__article--urgent');
     listsArray[cardIndex].updateTask(listsArray);
   } else {
     cardObject.urgent = false;
-    urgentImg.src = inactive;
+    urgentImg.src = "images/urgent.svg";
     cardBkgd.classList.remove('main__article--urgent');
     listsArray[cardIndex].updateTask(listsArray);
   }
 }
 
 function generateTaskItems() {
-  var dateId = Date.now();
+  let dateId = Date.now();
   taskItemList.insertAdjacentHTML ('beforeend',
     `<section class="article__section1">
     <img class="article__section--img1" src="images/delete.svg" alt="circle delete button">
@@ -256,21 +300,25 @@ function generateTaskItems() {
 }
 
 function returnTaskElements(list) {
-  var italic = "";
-  var codeBlock = "";
-  for (var i = 0; i < list.tasks.length; i++) {
-    list.tasks[i].check ?  italic = "italic" : italic = "";
+  let italic = "";
+  let img = "";
+  let codeBlock = "";
+  list.tasks.forEach(function(element) {
+    element.check ?  italic = "italic" : italic = "";
+    element.check ?  img = "checkbox-active.svg" : img = "checkbox.svg";
     codeBlock += `<section class="article__section1">
-    <img class="article__section--img1" src="images/${getCheckBoxImage(list.tasks[i].check)}" alt="circle checkbox button">
-    <p class="article__section--p ${italic}" data-id=${list.tasks[i].id}>${list.tasks[i].item}</p>
+    <img class="article__section--img1" src="images/${img}" alt="circle checkbox button">
+    <p class="article__section--p ${italic}" data-id=${element.id}>${element.item}</p>
     </section>`;
-  }
+  })
   return codeBlock;
 }
 
 function generateTaskCard(list) {
-  var bkgdColor = "";
+  let urgentImg = "";
+  let bkgdColor = "";
   list.urgent ?  bkgdColor = "main__article--urgent" : bkgdColor = "";
+  list.urgent ?  urgentImg = "urgent-active.svg" : urgentImg = "urgent.svg";
   main.insertAdjacentHTML ('afterbegin',
     `<article class="main__article ${bkgdColor}" data-id=${list.id}>
     <h2 class="article__h2">${list.title}</h2>
@@ -279,7 +327,7 @@ function generateTaskCard(list) {
     <hr>
     <section class="article__section2">
      <div class="article__section2--container">
-       <img class="article__section--img2" src="images/${getUrgentImage(list.urgent)}" alt="lightning bolt image">
+       <img class="article__section--img2" src="images/${urgentImg}" alt="lightning bolt image">
        <h4 class="article__section--h4">URGENT</h4>
      </div>
      <div class="article__section2--container">
@@ -292,16 +340,16 @@ function generateTaskCard(list) {
 }
 
 function getLists() {
-  if (JSON.parse(localStorage.getItem('theLists')) === null) {
-  } else {
-    listsArray = JSON.parse(localStorage.getItem('theLists')).map(function(obj) {
+  JSON.parse(localStorage.getItem('theLists')) === null ? listsArray : listsArray = JSON.parse(localStorage.getItem('theLists')).map(function(obj) {
       return new ToDoList(obj.id, obj.title, obj.tasks, obj.urgent);
     });
-  }
 }
 
 function reDisplayCards() {
-  for (var i = 0; i < listsArray.length; i++) {
-    generateTaskCard(listsArray[i]);
-  }
+  listsArray.forEach(function(element) {
+    generateTaskCard(element);
+  })
 }
+
+// end of jQuery ready
+// });

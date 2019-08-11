@@ -1,6 +1,6 @@
 class ToDoList {
   constructor(id, title, tasks, urgent) {
-    this.id = id || Date.now();
+    this.id = id;
     this.title = title;
     this.tasks = tasks || [];
     this.urgent = urgent || false;
@@ -10,9 +10,9 @@ class ToDoList {
     localStorage.setItem('theLists', JSON.stringify(listsArray));
   }
 
-  deleteFromStorage(index, array) {
-    listsArray.splice(index, 1);
-    this.saveToStorage(array);
+  deleteFromStorage(cardIndex, listsArray) {
+    listsArray.splice(cardIndex, 1);
+    this.saveToStorage(listsArray);
   }
 
   updateTask(listsArray) {
