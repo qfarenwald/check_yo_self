@@ -262,7 +262,7 @@ toggleUrgent = e => {
 
 generateTaskItems = () => {
   let dateId = Date.now();
-  document.querySelector('.aside__itemlist--container').insertAdjacentHTML ('beforeend',
+  taskItemList.append(
     `<section class="article__section1">
     <img class="article__section--img1" src="images/delete.svg" alt="circle delete button">
     <p class="article__section--p" data-id=${dateId}>${taskItem[0].value}</p>
@@ -290,7 +290,7 @@ generateTaskCard = list => {
   let bkgdColor = "";
   list.urgent ?  bkgdColor = "main__article--urgent" : bkgdColor = "";
   list.urgent ?  urgentImg = "urgent-active.svg" : urgentImg = "urgent.svg";
-  document.querySelector('.main').insertAdjacentHTML ('afterbegin',
+  main.prepend(
     `<article class="main__article ${bkgdColor}" data-id=${list.id}>
     <h2 class="article__h2">${list.title}</h2>
     <hr>
